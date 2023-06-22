@@ -1,0 +1,35 @@
+.threadContainer {
+    display: grid;
+    grid-template-columns: repeat(2);
+    grid-template-rows: repeat(2);
+    margin: 10px 5px 10px 5px;
+    row-gap: 10px;
+    column-gap: 10px;
+    justify-content: left;
+}
+
+.threadContainerActive {
+    background-color: rgb(247, 247, 247);
+}
+
+.threadThumbnail { 
+    grid-area: 1 / 1 / 3 / 2;
+    height: 50px;
+    width: 50px;
+    margin: 5px;
+}
+
+.threadTitle { 
+    grid-area: 1 / 2 / 2 / 3;
+    margin-right: 10px;
+    text-align: left;
+    margin: auto;
+}
+
+.threadInfo {
+     grid-area: 2 / 2 / 3 / 3;
+}
+
+.threadLink {
+    text-decoration: none;
+}

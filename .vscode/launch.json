@@ -1,0 +1,25 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node-terminal",
+            "name": "client",
+            "request": "launch",
+            "command": "npm run start",
+            "cwd": "${workspaceFolder}\\client"
+        },
+        {
+            "type": "node-terminal",
+            "name": "server",
+            "request": "launch",
+            "command": "npm run start",
+            "cwd": "${workspaceFolder}\\server"
+        }
+    ],
+    "compounds": [
+        {
+          "name": "Server + Browser",
+          "configurations": ["client", "server"]
+        }
+      ]
+}
