@@ -1,5 +1,4 @@
 import express from 'express';
-import { query } from './db';
 import router from "./routes";
 import bodyParser from 'body-parser';
 

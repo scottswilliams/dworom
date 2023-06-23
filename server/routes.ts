@@ -49,7 +49,7 @@ router.post('/login', async (req, res) => {
             );
 
             // Send the token
-            res.status(200).json({ token });
+            res.status(200).json({ token, username });
         } else {
             // Authentication failed
             res.status(401).json({ error: 'Invalid username or password' });

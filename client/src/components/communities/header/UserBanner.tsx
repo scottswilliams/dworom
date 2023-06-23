@@ -1,8 +1,7 @@
-
 import { useContext } from 'react';
-import { AuthContext } from './Home';
-import LoginOrRegisterBanner from './LoginOrRegister/LoginOrRegisterBanner'
-import './MainStyles.css'
+import { AuthContext } from '../Home';
+import LoginOrRegisterBanner from '../LoginOrRegister/LoginOrRegisterBanner'
+import './MainHeader.css'
 
 export const UserBanner = () =>
 {

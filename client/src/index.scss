@@ -1,0 +1,15 @@
+@import "./Themes.scss";
+
+html {
+  background-color: $color-primary-0;
+}
+body {
+  margin: 0;
+  font-style: normal;
+  font-family: verdana, sans-serif;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}

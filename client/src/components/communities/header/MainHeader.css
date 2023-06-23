@@ -1,19 +1,17 @@
-.mainBody {
-    background-color: #fff;
-    display: grid;
-    grid-template-columns: 4fr 1fr;
-    grid-template-rows: 1fr;
+.username {
+  font-weight: bold;
+  color: #bb3733;
 }
 
 .mainHeader {
-  background-color: darkgray;
+  background-color: #564458;
   display: flex;
   margin: 0;
-  background-color: #41486B;
+  background-color: #393441;
 }
 
 .mainLogo {
-  background-image: url('../../../public/images/dworom.png');
+  background-image: url("../../../../public/images/dworom.png");
   height: 50px;
   width: 100px;
   margin: 5px;
@@ -39,9 +37,4 @@
 
 .mainUserBannerItem:last-child {
   margin-right: 0;
-}
-
-.username {
-  font-weight: bold;
-  color: #bb3733;
-}
+}/*# sourceMappingURL=MainHeader.css.map */

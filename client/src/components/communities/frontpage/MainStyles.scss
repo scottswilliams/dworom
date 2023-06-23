@@ -1,0 +1,8 @@
+@import "../../Themes.scss";
+
+.mainBody {
+    background-color: $color-primary-0;
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    grid-template-rows: 1fr;
+}

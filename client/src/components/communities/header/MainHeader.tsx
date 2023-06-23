@@ -1,4 +1,4 @@
-import './MainStyles.css';
+import './MainHeader.css';
 import { UserBanner } from './UserBanner';
 
 export const MainHeader  = () =>

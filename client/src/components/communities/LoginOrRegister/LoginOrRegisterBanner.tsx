@@ -48,7 +48,7 @@ const LogoutButton = () =>
     authContext.setToken(null);
     authContext.setUsername(null);
   }
-  return <button className="mainUserBannerItem linkButton loginButton" onClick={resetAuthContext}>Log Out</button>
+  return <button className="mainUserBannerItem linkButton logoutButton" onClick={resetAuthContext}>Log Out</button>
 }
 
 const RegisterButton = () =>
@@ -129,7 +129,8 @@ const LoginModal: React.FC<IModalProps> = ({ isOpen, handleClose }) => {
     try {
       const res = await axios.post('http://localhost:5000/api/login', { username, password });
       authContext.setToken(res.data.token);
-      authContext.setUsername(username);
+      console.log(res.data);
+      authContext.setUsername(res.data.username);
       handleClose();
     } catch (err) {
       console.error(err);

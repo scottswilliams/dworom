@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { IThreadDatabaseProps, Thread, ThreadType } from '../comments/Thread';
+import { IThreadDatabaseProps, Thread, ThreadType } from '../../comments/Thread';
 import './MainStyles.css';
 
 export const MainBody  = () =>

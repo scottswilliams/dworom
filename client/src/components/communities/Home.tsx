@@ -1,19 +1,19 @@
-import { MainBody } from "./MainBody"
-import { MainHeader } from "./MainHeader"
-import  './HomeStyles.css'
+import { MainBody } from "./frontpage/MainBody"
+import { MainHeader } from "./header/MainHeader"
+import  './HomeStyles.scss'
 import { createContext, useEffect, useState } from "react";
 import axios from "axios";
 
 export const Home = () =>
 {
     const initialToken = localStorage.getItem('jwtToken');
+    const initialUsername = localStorage.getItem('username');
 
     const [token, setToken] = useState<string | null>(initialToken);
-    const [username, setUsername] = useState<string | null>(null);
+    const [username, setUsername] = useState<string | null>(initialUsername);
 
     useEffect(() =>
     {
-        document.title = "Dworom";
         const verifyToken = async () => {
             if (!initialToken) return;
       
@@ -23,7 +23,7 @@ export const Home = () =>
               });
       
               if (response.status === 200) {
-                setUsername(response.data.user);
+                setUsername(initialUsername);
               } else {
                 setToken(null);
               }
@@ -45,6 +45,15 @@ export const Home = () =>
           setUsername(null);
         }
       }, [token]);
+
+      useEffect(() => {
+        if (username) {
+          localStorage.setItem('username', username);
+        } 
+        else {
+          localStorage.removeItem('username');
+        }
+      }, [username]);
 
     return <AuthContext.Provider value={{ token, setToken, username, setUsername }}>
         <div className="mainContainer">

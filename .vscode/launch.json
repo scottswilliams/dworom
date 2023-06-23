@@ -5,14 +5,14 @@
             "type": "node-terminal",
             "name": "client",
             "request": "launch",
-            "command": "npm run start",
+            "command": "npm run build;npm run start",
             "cwd": "${workspaceFolder}\\client"
         },
         {
             "type": "node-terminal",
             "name": "server",
             "request": "launch",
-            "command": "npm run start",
+            "command": "npm run build;npm run start",
             "cwd": "${workspaceFolder}\\server"
         }
     ],
