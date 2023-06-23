@@ -1,1 +1,44 @@
-/*# sourceMappingURL=Sidebar.css.map */
+.username {
+  font-weight: bold;
+  color: #bb3733;
+}
+
+.sidebarHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  margin: 10px 20px 10px 20px;
+  width: 80%;
+  background-color: #564458;
+  padding: 20px;
+  border-radius: 20px;
+}
+
+.sidebarCommunityTitle {
+  font-size: 20px;
+  color: lightgray;
+  margin-bottom: 5px;
+}
+
+.communityTitle {
+  font-weight: bold;
+}
+
+.sidebarButton {
+  font-size: 16px;
+  background-color: #c46360;
+  color: #241B25;
+  padding: 10px;
+  margin: 10px auto 10px auto;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+.sidebarButton:hover {
+  background-color: #a7514f;
+}
+
+.creationButtons {
+  display: flex;
+}/*# sourceMappingURL=Sidebar.css.map */

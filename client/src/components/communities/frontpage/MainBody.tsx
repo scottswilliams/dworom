@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { IThreadDatabaseProps, Thread, ThreadType } from '../../comments/Thread';
+import { IThreadDatabaseProps, Thread, ThreadType } from '../../threads/Thread';
 import './MainStyles.css';
+import Sidebar from '../sidebar/Sidebar';
 
 export const MainBody  = () =>
 {
@@ -22,6 +23,8 @@ export const MainBody  = () =>
         <div className="threadsContainer">
             <Thread activeRef={activeRef} setActiveRef={setActiveRef} databaseProps={sampleThread1}/>
         </div>
-        <div className="mainSidebarContainer"></div>
+        <div className="mainSidebarContainer">
+            <Sidebar />
+        </div>
     </div>
 }
