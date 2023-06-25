@@ -18,7 +18,6 @@ const LoginOrRegisterBanner = () =>
   {
       return <>
       <LoginButton />
-      <span className="mainUserBannerItem separator">⋅</span>
       <RegisterButton />
       </>
   }

@@ -4,6 +4,11 @@
 }
 
 .threadContainer {
+  border-bottom: 1px solid #50485C;
+  margin-left: 10px;
+}
+
+.thread {
   display: grid;
   grid-template-columns: repeat(2);
   grid-template-rows: repeat(2);

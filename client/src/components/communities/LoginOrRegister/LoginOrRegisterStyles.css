@@ -1,86 +1,72 @@
-.linkButton {
-    background: none!important;
-    border: none;
-    padding: 0!important;
-    color: #41486B;
-    cursor: pointer;
-}
-
-.linkButton:hover {
-    text-decoration: underline;
-}
-
-
 .modal-wrapper {
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.4);
-  }
-  
-  .hide-modal {
-    display: none;
-  }
-  
-  .show-modal {
-    display: block;
-  }
-  
-  .modal-title {
-    font-size: 20px;
-  }
-  
-  .modal-content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 30%;
-  }
-  
-  .close-button {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-  }
-  
-  .close-button:hover,
-  .close-button:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-  }
-  
-  .input-field {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    box-sizing: border-box;
-    border: none;
-    background-color: #f2f2f2;
-  }
-  
-  .input-field:focus {
-    background-color: #ddd;
-  }
-  
-  .register-button {
-    width: 100%;
-    background-color: #c46360;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .register-button:hover {
-    background-color: #552827;
-  }
-  
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.hide-modal {
+  display: none;
+}
+
+.show-modal {
+  display: block;
+}
+
+.modal-title {
+  font-size: 20px;
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 30%;
+}
+
+.close-button {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close-button:hover,
+.close-button:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.input-field {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: none;
+  background-color: #f2f2f2;
+}
+
+.input-field:focus {
+  background-color: #ddd;
+}
+
+.register-button {
+  width: 100%;
+  background-color: #c46360;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.register-button:hover {
+  background-color: #552827;
+}/*# sourceMappingURL=LoginOrRegisterStyles.css.map */

@@ -31,14 +31,16 @@ export const Thread = (props: IThreadProps) =>
 {
     const ref = useRef();
     
-    return <div className={"threadContainer" + activeRefClassOrNull(ref, props.activeRef)} onClick={() => props.setActiveRef(ref)}>
-        <div className="threadThumbnail">
-            <img alt="" src="https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg" height="50px" width="50px"></img>
+    return <div className="threadContainer">
+        <div className={"thread" + activeRefClassOrNull(ref, props.activeRef)} onClick={() => props.setActiveRef(ref)}>
+            <div className="threadThumbnail">
+                <img alt="" src="https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg" height="50px" width="50px"></img>
+            </div>
+            <div className="threadTitle">
+                <a className="threadLink" href={props.databaseProps.link}>{props.databaseProps.title}</a>
+            </div>
+            <div className="threadInfo"></div>
         </div>
-        <div className="threadTitle">
-            <a className="threadLink" href={props.databaseProps.link}>{props.databaseProps.title}</a>
-        </div>
-        <div className="threadInfo"></div>
     </div>;
 }
 

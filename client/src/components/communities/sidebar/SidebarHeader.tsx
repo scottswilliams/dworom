@@ -7,8 +7,7 @@ export const SidebarHeader = () =>
             The <span className="communityTitle">Dworom</span> Community
         </div>
         <div className="creationButtons">
-            <button className="sidebarButton">Create a Thread</button>
-            <button className="sidebarButton">Create a Community</button>
+            <a href="#createThread" className="sidebarButtonLink"><button className="sidebarButton">Create a Thread</button></a>
         </div>
     </div>
 }

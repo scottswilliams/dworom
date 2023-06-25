@@ -6,8 +6,7 @@
 .sidebarHeader {
   display: flex;
   flex-direction: column;
-  align-items: left;
-  margin: 10px 20px 10px 20px;
+  margin: 10px;
   width: 80%;
   background-color: #564458;
   padding: 20px;
@@ -24,6 +23,10 @@
   font-weight: bold;
 }
 
+.sidebarButtonLink {
+  width: 100%;
+}
+
 .sidebarButton {
   font-size: 16px;
   background-color: #c46360;
@@ -33,6 +36,8 @@
   border: none;
   border-radius: 30px;
   cursor: pointer;
+  margin-right: 10px;
+  width: 100%;
 }
 
 .sidebarButton:hover {

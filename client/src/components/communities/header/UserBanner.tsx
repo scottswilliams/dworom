@@ -7,7 +7,7 @@ export const UserBanner = () =>
 {
     const authContext = useContext(AuthContext);
     
-    return <div className="mainHeaderRight">
+    return <div className="mainHeaderBody">
         <span className="mainUserBanner">
             {authContext.token != null ? <LoggedInUserHeader /> : null }
             <LoginOrRegisterBanner />
@@ -21,8 +21,6 @@ const LoggedInUserHeader = () =>
     
     return <>
         <button className="mainUserBannerItem linkButton"><span className="username">{authContext.username}</span></button>
-        <span className="mainUserBannerItem separator">⋅</span>
         <button className="mainUserBannerItem linkButton">Inbox</button>
-        <span className="mainUserBannerItem separator">⋅</span>
     </>
 }

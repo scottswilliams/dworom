@@ -2,10 +2,13 @@
 
 
 .mainHeader {
-    background-color: $color-secondary-1-1;
     display: flex;
+    position: fixed;
+    flex-direction: column;
     margin: 0;
-    background-color: $color-primary-1;
+    border-right: 2px solid $color-primary-2;
+    height: 100%;
+    width: 110px;
   }
   
   .mainLogo {
@@ -15,25 +18,38 @@
     margin: 5px;
   }
   
-  .mainUserBanner {
-    border-radius: 5px;
-    background-color: #b4b7ce;
-    margin: auto 5px auto 5px;
-    padding: 5px;
-  }
-  
-  .mainHeaderRight {
+  .mainHeaderBody {
     font-size: 14px;
     width: 100%;
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: column;
   }
-  
+
+  .mainUserBanner {
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    margin: auto;
+    padding: 5px;
+  }
+
   .mainUserBannerItem {
     margin-right: 5px;
+    font-size: 20px;
+    text-align: center;
+    color: lightgray;
   }
   
-  .mainUserBannerItem:last-child {
-    margin-right: 0;
-  }
-  
+.linkButton {
+  cursor: pointer;
+  margin: 10px auto 10px auto;
+  padding: 10px;
+  border-radius: 25px;
+  background: none;
+  border: 0;
+  font-family: "Segoe UI", Roboto, verdana, sans-serif;
+}
+
+.linkButton:hover {
+    background-color: $color-secondary-1-2;
+}
