@@ -2,8 +2,8 @@ import express from 'express';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import 'dotenv';
-import { pool } from './db';
 import authenticateToken from './middleware/auth/AuthenticateToken';
+import { pool } from './db';
 
 const router = express.Router();
 
