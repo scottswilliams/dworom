@@ -1,7 +1,129 @@
-.mainContainer {
+.username {
+  font-weight: bold;
+  color: #bb3733;
+}
+
+.mainHeader {
   display: flex;
-  flex-direction: row;
+  position: fixed;
+  flex-direction: column;
+  margin: 0;
+  border-right: 2px solid #393441;
+  height: 100%;
+  width: 110px;
+}
+
+.mainLogo {
+  background-image: url("../../../../public/images/dworom.png");
+  height: 50px;
+  width: 100px;
+  margin: 5px;
+}
+
+.mainHeaderBody {
+  font-size: 14px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.mainUserBanner {
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+  margin: auto;
+  padding: 5px;
+}
+
+.mainUserBannerItem {
+  margin-right: 5px;
+  font-size: 20px;
+  text-align: center;
+  color: lightgray;
+}
+
+.linkButton {
+  cursor: pointer;
+  margin: 10px auto 10px auto;
+  padding: 10px;
+  border-radius: 25px;
+  background: none;
+  border: 0;
+  font-family: "Segoe UI", Roboto, verdana, sans-serif;
+}
+
+.linkButton:hover {
+  background-color: #3D313F;
+}
+
+.username {
+  font-weight: bold;
+  color: #bb3733;
+}
+
+.mainSidebarContainer {
+  margin: 5px;
+}
+
+.sidebarHeader {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  width: 80%;
+  background-color: #564458;
+  padding: 20px;
+  border-radius: 20px;
+}
+
+.sidebarCommunityTitle {
+  font-size: 18px;
+  color: lightgray;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.communityTitle {
+  font-weight: bold;
+}
+
+.sidebarButtonLink {
+  width: 100%;
+}
+
+.sidebarButton {
+  font-size: 16px;
+  background-color: #c46360;
+  color: #241B25;
+  padding: 10px;
+  margin: 10px auto 10px auto;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  margin-right: 10px;
+  width: 100%;
+}
+
+.sidebarButton:hover {
+  background-color: #a7514f;
+}
+
+.creationButtons {
+  display: flex;
+}
+
+.appContainer {
+  display: grid;
+  grid-template-columns: 8fr 3fr;
+  grid-template-rows: 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
   height: 100%;
   width: 100%;
   margin: 0;
+}
+
+.mainBodyContainer {
+  margin-left: 110px;
+  height: 100%;
+  width: calc(100% - 110px);
 }/*# sourceMappingURL=HomeStyles.css.map */

@@ -1,5 +1,6 @@
 @import "../../../Themes.scss";
 
+$header-width: 110px;
 
 .mainHeader {
     display: flex;
@@ -8,37 +9,37 @@
     margin: 0;
     border-right: 2px solid $color-primary-2;
     height: 100%;
-    width: 110px;
+    width: $header-width;
   }
   
-  .mainLogo {
-    background-image: url('../../../../public/images/dworom.png');
-    height: 50px;
-    width: 100px;
-    margin: 5px;
-  }
-  
-  .mainHeaderBody {
-    font-size: 14px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-  }
+.mainLogo {
+  background-image: url('../../../../public/images/dworom.png');
+  height: 50px;
+  width: 100px;
+  margin: 5px;
+}
 
-  .mainUserBanner {
-    display: flex;
-    flex-direction: column;
-    border-radius: 5px;
-    margin: auto;
-    padding: 5px;
-  }
+.mainHeaderBody {
+  font-size: 14px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
 
-  .mainUserBannerItem {
-    margin-right: 5px;
-    font-size: 20px;
-    text-align: center;
-    color: lightgray;
-  }
+.mainUserBanner {
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+  margin: auto;
+  padding: 5px;
+}
+
+.mainUserBannerItem {
+  margin-right: 5px;
+  font-size: 20px;
+  text-align: center;
+  color: lightgray;
+}
   
 .linkButton {
   cursor: pointer;

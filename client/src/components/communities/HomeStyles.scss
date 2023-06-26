@@ -1,7 +1,19 @@
-.mainContainer {
-    display: flex;
-    flex-direction: row;
+@import "../communities/header/MainHeader.scss";
+@import "../communities/sidebar/Sidebar.scss";
+
+.appContainer {
+    display: grid;
+    grid-template-columns: 8fr 3fr;
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
     height: 100%;
     width: 100%;
     margin: 0;
+}
+
+.mainBodyContainer {
+    margin-left: $header-width;
+    height: 100%;
+    width: calc(100% - $header-width);
 }

@@ -1,5 +1,12 @@
 @import "../../../Themes.scss";
 
+.mainSidebarContainer {
+    margin: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .sidebarHeader {
     display: flex;
     flex-direction: column;
@@ -11,9 +18,10 @@
 }
 
 .sidebarCommunityTitle {
-    font-size: 20px;
+    font-size: 18px;
     color: lightgray;
     margin-bottom: 5px;
+    text-align: center;
 }
 
 .communityTitle {
@@ -23,6 +31,7 @@
 .sidebarButtonLink {
     width: 100%;
 }
+
 .sidebarButton {
     font-size: 16px;
     background-color: #c46360;
@@ -44,3 +53,4 @@
     display: flex;
     
 }
+

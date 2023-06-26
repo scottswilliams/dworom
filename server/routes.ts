@@ -17,7 +17,7 @@ router.post('/register', async (req, res) => {
 
         // Insert user into database
         const result = await pool.query(
-            "INSERT INTO users (name, password, email) VALUES ($1, $2, $3) RETURNING id, name, email",
+            "INSERT INTO users (username, password, email) VALUES ($1, $2, $3) RETURNING id, username, email",
             [username, hashedPassword, email]
         );
 
@@ -34,7 +34,7 @@ router.post('/login', async (req, res) => {
 
         // Get user from the database
         const user = await pool.query(
-            "SELECT * FROM users WHERE name = $1",
+            "SELECT * FROM users WHERE username = $1",
             [username]
         );
 
@@ -53,6 +53,45 @@ router.post('/login', async (req, res) => {
         } else {
             // Authentication failed
             res.status(401).json({ error: 'Invalid username or password' });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
+
+router.post('/createthread', async (req: any, res) => {
+    try {
+        let username;
+
+        const { community, title, link, body, token } = req.body;
+        
+        jwt.verify(token, process.env.JWT_SECRET!, (err: any, decoded: any) => {
+            if (err) {
+              return res.status(403).json({ message: 'Failed to authenticate token' });
+            }
+            else
+            {
+                username = decoded.username;
+            }
+          });
+
+
+        const communityResult= await pool.query("SELECT id FROM communities WHERE name = $1", [community]);
+        const communityInternalId = communityResult.rows[0].id;
+
+        const authorResult = await pool.query("SELECT id FROM users WHERE username = $1", [username]);
+        const authorInternalId = authorResult.rows[0].id;
+        
+        const id = await pool.query("INSERT INTO threads (community_id, title, link, body, author_id) VALUES($1, $2, $3, $4, $5) RETURNING id",
+            [communityInternalId, title, link, body, authorInternalId]
+        );
+
+        if (id) {
+            res.status(200);
+        } 
+        else {
+            res.status(401).json({ error: 'Invalid input' });
         }
     } catch (err) {
         console.error(err);

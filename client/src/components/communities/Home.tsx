@@ -3,6 +3,13 @@ import { MainHeader } from "./header/MainHeader"
 import  './HomeStyles.scss'
 import { createContext, useEffect, useState } from "react";
 import axios from "axios";
+import {
+  Route,
+  BrowserRouter as Router,
+  Routes
+} from "react-router-dom";
+import { CreateThread } from "./createThread/CreateThread";
+import Sidebar from "./sidebar/Sidebar";
 
 export const Home = () =>
 {
@@ -56,10 +63,19 @@ export const Home = () =>
       }, [username]);
 
     return <AuthContext.Provider value={{ token, setToken, username, setUsername }}>
-        <div className="mainContainer">
+      <Router>
+          <div className="appContainer">
             <MainHeader />
-            <MainBody />
-        </div>
+            <div className="mainBodyContainer">
+              <Routes>
+                <Route path="/" element={<MainBody/>}>
+                  </Route>
+                <Route path="/createThread" element={<CreateThread />}></Route>
+              </Routes>
+            </div>
+            <Sidebar />
+          </div>
+      </Router>
     </AuthContext.Provider>
 }
 
