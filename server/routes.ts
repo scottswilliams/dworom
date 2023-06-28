@@ -44,7 +44,7 @@ router.post('/login', async (req, res) => {
 
             // Generate JWT token
             const token = jwt.sign(
-                { id: user.rows[0].id, username: user.rows[0].name },
+                { id: user.rows[0].id, username: user.rows[0].username },
                 process.env.JWT_SECRET!
             );
 
@@ -99,10 +99,23 @@ router.post('/createthread', async (req: any, res) => {
     }
 });
 
-// Endpoint to verify token
 router.get('/verifyToken', authenticateToken, (req, res) => {
     res.sendStatus(200);
     
+});
+
+router.get('/threads', async (req, res) => {
+    const page: number = parseInt(req.query.page as string) || 1; //  Number of pages we've already loaded
+    const limit: number = 1; // Number of threads per page
+    const offset: number = (page - 1) * limit; // Number of threads we've already loaded
+
+    try {
+        const rows = await pool.query('SELECT * FROM threads OFFSET $1 LIMIT $2', [offset, limit]);
+        res.json(rows);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error fetching threads');
+    }
 });
 
 export default router;

@@ -16,15 +16,11 @@ interface IThreadProps
 export interface IThreadDatabaseProps
 {
     id: string,
-    community: string,
-    author: string,
+    community_id: string,
+    author_id: string,
     title: string,
-    score: number, 
-    threadType: ThreadType,
-    submissionTime: Date,
-    myVote?: number,
+    creation_date: Date,
     link?: string,
-
 }
 
 export const Thread = (props: IThreadProps) =>
@@ -39,7 +35,9 @@ export const Thread = (props: IThreadProps) =>
             <div className="threadTitle">
                 <a className="threadLink" href={props.databaseProps.link}>{props.databaseProps.title}</a>
             </div>
-            <div className="threadInfo"></div>
+            <div className="threadInfo">
+                <div className="threadInfoAuthor">{props.databaseProps.author_id}</div>
+            </div>
         </div>
     </div>;
 }

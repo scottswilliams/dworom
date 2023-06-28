@@ -45,6 +45,11 @@
   grid-area: 2/2/3/3;
 }
 
+.threadInfoAuthor {
+  color: darkgray;
+  font-size: 10px;
+}
+
 .threadLink {
   text-decoration: none;
   color: lightgray;

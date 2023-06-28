@@ -128,7 +128,6 @@ const LoginModal: React.FC<IModalProps> = ({ isOpen, handleClose }) => {
     try {
       const res = await axios.post('http://localhost:5000/api/login', { username, password });
       authContext.setToken(res.data.token);
-      console.log(res.data);
       authContext.setUsername(res.data.username);
       handleClose();
     } catch (err) {
