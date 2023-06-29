@@ -16,8 +16,8 @@ interface IThreadProps
 export interface IThreadDatabaseProps
 {
     id: string,
-    community_id: string,
-    author_id: string,
+    community_name: string,
+    author_username: string,
     title: string,
     creation_date: Date,
     link?: string,
@@ -36,7 +36,7 @@ export const Thread = (props: IThreadProps) =>
                 <a className="threadLink" href={props.databaseProps.link}>{props.databaseProps.title}</a>
             </div>
             <div className="threadInfo">
-                <div className="threadInfoAuthor">{props.databaseProps.author_id}</div>
+                <span className="threadInfo">by <span className="threadAuthor">{props.databaseProps.author_username}</span> in community <span className="threadCommunity">{props.databaseProps.community_name}</span> at <span className="threadTimestamp">{new Date(props.databaseProps.creation_date).toLocaleString()}</span> </span>
             </div>
         </div>
     </div>;

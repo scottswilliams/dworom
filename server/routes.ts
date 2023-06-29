@@ -110,7 +110,25 @@ router.get('/threads', async (req, res) => {
     const offset: number = (page - 1) * limit; // Number of threads we've already loaded
 
     try {
-        const rows = await pool.query('SELECT * FROM threads OFFSET $1 LIMIT $2', [offset, limit]);
+        const rows = await pool.query(`
+        SELECT 
+            threads.id,
+            communities.name AS community_name,
+            users.username AS author_username,
+            threads.title,
+            threads.creation_date,
+            threads.link
+        FROM
+            threads
+        JOIN
+            communities ON threads.community_id = communities.id
+        JOIN
+            users ON threads.author_id = users.id
+        OFFSET
+            $1
+        LIMIT
+            $2;`,
+         [offset, limit]);
         res.json(rows);
     } catch (error) {
         console.error(error);

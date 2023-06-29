@@ -38,16 +38,16 @@
   grid-area: 1/2/2/3;
   margin-right: 10px;
   text-align: left;
-  margin: auto;
+  font-size: 20px;
 }
 
 .threadInfo {
   grid-area: 2/2/3/3;
 }
 
-.threadInfoAuthor {
+.threadInfo {
   color: darkgray;
-  font-size: 10px;
+  font-size: 14px;
 }
 
 .threadLink {
@@ -58,4 +58,12 @@
 .threadLink:visited {
   text-decoration: none;
   color: darkgray;
+}
+
+.threadAuthor {
+  color: orange;
+}
+
+.threadCommunity {
+  color: purple;
 }/*# sourceMappingURL=Thread.css.map */
