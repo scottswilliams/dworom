@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt';
 import 'dotenv';
 import authenticateToken from './middleware/auth/AuthenticateToken';
 import { pool } from './db';
+import { thumbnailCrawler } from './apps/thumbnailCrawler';
 
 const router = express.Router();
 
@@ -63,6 +64,7 @@ router.post('/login', async (req, res) => {
 router.post('/createthread', async (req: any, res) => {
     try {
         let username;
+        let thumbnail = null;
 
         const { community, title, link, body, token } = req.body;
         
@@ -82,9 +84,13 @@ router.post('/createthread', async (req: any, res) => {
 
         const authorResult = await pool.query("SELECT id FROM users WHERE username = $1", [username]);
         const authorInternalId = authorResult.rows[0].id;
+
+        if (link) {
+            thumbnail = await thumbnailCrawler(link,pool);
+        }
         
-        const id = await pool.query("INSERT INTO threads (community_id, title, link, body, author_id) VALUES($1, $2, $3, $4, $5) RETURNING id",
-            [communityInternalId, title, link, body, authorInternalId]
+        const id = await pool.query("INSERT INTO threads (community_id, title, link, body, author_id, thumbnail) VALUES($1, $2, $3, $4, $5, $6) RETURNING id",
+            [communityInternalId, title, link, body, authorInternalId, thumbnail]
         );
 
         if (id) {
@@ -105,35 +111,50 @@ router.get('/verifyToken', authenticateToken, (req, res) => {
 });
 
 router.get('/threads', async (req, res) => {
-    const page: number = parseInt(req.query.page as string) || 1; //  Number of pages we've already loaded
-    const limit: number = 1; // Number of threads per page
-    const offset: number = (page - 1) * limit; // Number of threads we've already loaded
+    const page = parseInt(req.query.page as string) || 1; //  Number of pages we've already loaded
+    const limit = 10; // Number of threads per page
+    const offset = (page - 1) * limit; // Number of threads we've already loaded
 
     try {
-        const rows = await pool.query(`
-        SELECT 
-            threads.id,
-            communities.name AS community_name,
-            users.username AS author_username,
-            threads.title,
-            threads.creation_date,
-            threads.link
-        FROM
-            threads
-        JOIN
-            communities ON threads.community_id = communities.id
-        JOIN
-            users ON threads.author_id = users.id
-        OFFSET
-            $1
-        LIMIT
-            $2;`,
-         [offset, limit]);
-        res.json(rows);
+        const { rows } = await pool.query(`
+            SELECT 
+                threads.id,
+                communities.name AS community_name,
+                users.username AS author_username,
+                threads.title,
+                threads.creation_date,
+                threads.link,
+                threads.thumbnail
+            FROM
+                threads
+            JOIN
+                communities ON threads.community_id = communities.id
+            JOIN
+                users ON threads.author_id = users.id
+            OFFSET
+                $1
+            LIMIT
+                $2;`,
+            [offset, limit]);
+
+        // Convert thumbnail to Base64
+        const results = rows.map(row => {
+            if (row.thumbnail) {
+                const thumbnailBase64 = row.thumbnail.toString('base64');
+                return {
+                    ...row,
+                    thumbnail: `data:image/png;base64,${thumbnailBase64}`
+                };
+            }
+            return row;
+        });
+
+        res.json(results);
     } catch (error) {
         console.error(error);
         res.status(500).send('Error fetching threads');
     }
 });
+
 
 export default router;

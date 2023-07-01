@@ -38,8 +38,8 @@ export const ThreadComponent: React.FC = () => {
       const response = await axios.get('http://localhost:5000/api/threads', {
         params: { page: pageNumber },
       });
-      setThreads((prevThreads) => [...prevThreads, ...response.data.rows]);
-      setHasMore(response.data.rows.length > 0);
+      setThreads((prevThreads) => [...prevThreads, ...response.data]);
+      setHasMore(response.data.length > 0);
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
