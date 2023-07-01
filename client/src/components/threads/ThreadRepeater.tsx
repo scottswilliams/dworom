@@ -49,17 +49,8 @@ export const ThreadComponent: React.FC = () => {
   return (
     <div>
       {threads.map((thread, index) => (
-        <div key={thread.id}>
-          {threads.length === index + 1 ? (
-            
-            <div ref={lastThreadElementRef}>
-                <Thread setActiveRef={setActiveRef} activeRef={activeRef} databaseProps={thread} />
-            </div>
-          ) : (
-            <div>
-             <Thread setActiveRef={setActiveRef} activeRef={activeRef} databaseProps={thread}/>
-            </div>
-          )}
+        <div key={thread.id} ref={threads.length === index + 1 ? lastThreadElementRef : null}>
+            <Thread setActiveRef={setActiveRef} activeRef={activeRef} databaseProps={thread} inComments={true} />
         </div>
       ))}
       {isLoading && 'Loading...'}

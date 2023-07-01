@@ -10,6 +10,7 @@ import {
 } from "react-router-dom";
 import { CreateThread } from "./createThread/CreateThread";
 import Sidebar from "./sidebar/Sidebar";
+import { ThreadComments } from "../threads/ThreadComments";
 
 export const Home = () =>
 {
@@ -68,9 +69,9 @@ export const Home = () =>
             <MainHeader />
             <div className="mainBodyContainer">
               <Routes>
-                <Route path="/" element={<MainBody/>}>
-                  </Route>
+                <Route path="/" element={<MainBody/>}></Route>
                 <Route path="/createThread" element={<CreateThread />}></Route>
+                <Route path="/c/:community/threads/:id" element={<ThreadComments />}></Route>
               </Routes>
             </div>
             <Sidebar />

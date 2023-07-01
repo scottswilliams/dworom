@@ -8,7 +8,7 @@ export const SidebarHeader = () =>
             The <span className="communityTitle">Dworom</span> Community
         </div>
         <Routes>
-            <Route path="/" element={
+            <Route path="/*" element={
                 <div className="creationButtons">
                     <Link to="/createthread" className="sidebarButtonLink"><button className="sidebarButton">Create a Thread</button></Link>
                 </div>

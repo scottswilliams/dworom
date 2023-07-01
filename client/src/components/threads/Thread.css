@@ -1,8 +1,3 @@
-.username {
-  font-weight: bold;
-  color: #bb3733;
-}
-
 .threadsContainer {
   width: 100%;
   height: 100%;
@@ -14,50 +9,67 @@
   width: 100%;
 }
 
-.thread {
-  display: grid;
-  margin: 10px 5px 10px 5px;
-  row-gap: 10px;
-  -moz-column-gap: 10px;
-       column-gap: 10px;
-  justify-content: left;
-}
-
 .threadContainerActive {
   background-color: #393441;
 }
 
+.thread {
+  display: grid;
+  grid-template-columns: 70px auto 140px;
+  margin: 5px 5px 5px 5px;
+}
+
 .threadThumbnail {
-  grid-area: 1/1/3/2;
+  grid-area: 1/1/4/2;
   height: 50px;
   width: 50px;
-  margin: 5px;
+  margin: auto;
 }
 
 .threadTitle {
   grid-area: 1/2/2/3;
-  margin-right: 10px;
   text-align: left;
   font-size: 20px;
+  margin: auto 10px auto 0;
 }
 
 .threadInfo {
   grid-area: 2/2/3/3;
-}
-
-.threadInfo {
   color: darkgray;
   font-size: 14px;
 }
 
+.threadButtons {
+  text-align: right;
+  grid-area: 1/3/3/4;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+}
+
+.threadComments {
+  grid-area: 1/1/3/2;
+}
+
+.threadLikes {
+  margin: auto;
+  grid-area: 1/2/2/3;
+}
+
+.threadDislikes {
+  grid-area: 2/2/3/3;
+}
+
 .threadLink {
   text-decoration: none;
-  color: lightgray;
+  color: white;
 }
 
 .threadLink:visited {
   text-decoration: none;
-  color: darkgray;
+  color: lightgray;
 }
 
 .threadAuthor {

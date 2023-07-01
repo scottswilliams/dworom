@@ -20,17 +20,22 @@ export async function thumbnailCrawler(url: string, pool: Pool) {
             if (imageUrl && !imageUrl.startsWith('http')) {
                 imageUrl = new URL(imageUrl, baseUrl).href;
             }
-            
+
+            let score = 0;
+
             // Ignore images that are likely to be icons or very small
             if (width < 50 || height < 50) {
-                return;
+                score =+ 1;
             }
 
             // Calculate a "score" for this image
-            let score = 0;
 
-            if (width > 100 || height > 100) {
+            if (width > 100 && height > 100) {
                 score += 10;
+            }
+
+            else {
+                score += 5;
             }
 
             // Favor images with a "normal" aspect ratio (between 0.5 and 2)

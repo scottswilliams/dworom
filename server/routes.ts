@@ -156,5 +156,45 @@ router.get('/threads', async (req, res) => {
     }
 });
 
+router.get('/thread/:id', async (req, res) => {
+    const thread_id = req.params.id
+
+    try {
+        const { rows } = await pool.query(`
+            SELECT 
+            threads.id,
+            communities.name AS community_name,
+            users.username AS author_username,
+            threads.title,
+            threads.creation_date,
+            threads.link,
+            threads.body,
+            threads.thumbnail FROM threads
+            JOIN
+                communities ON threads.community_id = communities.id
+            JOIN
+                users ON threads.author_id = users.id
+            WHERE threads.id = $1`, 
+            [thread_id]);
+        
+        // Convert thumbnail to Base64
+        const results = rows.map(row => {
+            if (row.thumbnail) {
+                const thumbnailBase64 = row.thumbnail.toString('base64');
+                return {
+                    ...row,
+                    thumbnail: `data:image/png;base64,${thumbnailBase64}`
+                };
+            }
+            return row;
+        });
+        res.json(results[0]);
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send('Error fetching thread');
+    }
+
+});
 
 export default router;
