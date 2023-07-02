@@ -1,69 +1,65 @@
-import Quill from "quill";
 import "./CreateThread.css";
-import { Dispatch, FormEvent, SetStateAction, useContext, useEffect, useId, useState } from "react";
+import { Dispatch, FormEvent, SetStateAction, useContext, useState } from "react";
 import axios from "axios";
 import { AuthContext } from "../Home";
+import { EditorContent, useEditor } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import { TextEditor } from "../textinput/TextEditor";
 
 export const CreateThread = () =>
 {
     const authContext = useContext(AuthContext);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const [title, setTitle] = useState<String | null>(null);
+    const [community, setCommunity] = useState<String | null>(null);
+    const [link, setLink] = useState<String | null>(null);
+    const [bodyHTML, setBodyHTML] = useState<String | null>(null);
     
-    return <form method="post" onSubmit={(e) => tryCreateThread(e, setErrorMessage, authContext.token)} className="createThreadForm">
+    return <div className="createThreadForm">
         <div className="createThreadFormTitle">Create a Thread</div>
         <ErrorMessage error={errorMessage} />
-        <CommunityEditor />
-        <TitleEditor />
-        <LinkEditor />
-        <BodyEditor />
-        <button className="createThreadButton" type="submit">Create Thread</button>
-    </form>
+        <CommunityEditor setTextField={setCommunity}/>
+        <TitleEditor setTextField={setTitle}/>
+        <LinkEditor setTextField={setLink}/>
+        <BodyEditor setTextField={setBodyHTML} />
+        <button onClick={() => tryCreateThread(title, community, link, bodyHTML, setErrorMessage, authContext.token)} className="createThreadButton" type="submit">Create Thread</button>
+    </div>
 
 }
 
-const CommunityEditor = () =>
+interface IThreadTextField {
+    setTextField: Dispatch<SetStateAction<String | null>>,
+}
+
+const CommunityEditor = (props: IThreadTextField) =>
 {
     return <div className="titleEditorContainer">
         <span className="titleInputTitle">Community</span> 
-        <div className="communityInputContainer"><input name="community" className="communityInput" type="text"></input></div>
+        <div className="communityInputContainer"><input name="community" className="communityInput" onChange={(e) => props.setTextField(e.target.value)}></input></div>
     </div>
 }
 
-const TitleEditor = () =>
+const TitleEditor = (props: IThreadTextField) =>
 {
     return <div className="titleEditorContainer">
         <span className="titleInputTitle">Title</span>
-        <div className="titleInputContainer"><input name="title" className="titleInput" type="text"></input></div>
+        <div className="titleInputContainer"><input name="title" className="titleInput" onChange={(e) => props.setTextField(e.target.value)}></input></div>
     </div>
 }
 
-const LinkEditor = () =>
+const LinkEditor = (props: IThreadTextField) =>
 {
     return <div className="titleEditorContainer">
         <span className="titleInputTitle">Link</span> <span className="inputTitleOptional">(optional)</span>
-        <div className="titleInputContainer"><input name="link" className="titleInput" type="text"></input></div>
+        <div className="titleInputContainer"><input name="link" className="titleInput" onChange={(e) => props.setTextField(e.target.value)}></input></div>
     </div>
 }
 
-const BodyEditor = () =>
+const BodyEditor = (props: IThreadTextField) =>
 {
-    const hiddenBodyForm = useId();
-
-    useEffect(() =>
-    {
-        const quill = new Quill('#editor', {theme: 'bubble'});
-        quill.on('text-change', () =>
-        {
-            const hiddenBodyElement = document.getElementById(hiddenBodyForm) as HTMLInputElement;
-            hiddenBodyElement.value = JSON.stringify(quill.getContents());
-        });
-    });
     return <div className="bodyEditorContainer">
-        <link href="https://cdn.quilljs.com/1.3.6/quill.bubble.css" rel="stylesheet"></link>
-        <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
         <span className="bodyInputTitle">Body</span> <span className="inputTitleOptional">(optional)</span>
-        <div id="editor"></div>
-        <input name="body" type="hidden" id={hiddenBodyForm}></input>
+        <TextEditor setTextField={props.setTextField}/>
     </div>
 }
 
@@ -81,33 +77,22 @@ const ErrorMessage = (props: IErrorMessageProps) =>
     }
 }
 
-async function tryCreateThread(e: FormEvent<HTMLFormElement>, setErrorMessage: Dispatch<SetStateAction<string | null>>, token: string | null)
+async function tryCreateThread(title: String | null, community: String | null, link: String | null, bodyHTML: String | null, setErrorMessage: Dispatch<SetStateAction<string | null>>, token: string | null)
 {
-    e.preventDefault();
-
-    const form = e.target as any;
-    const formData = new FormData(form) as any;
-    const community = formData.get("community");
-    const title = formData.get("title");
-    const link = formData.get("link");
-    const body = formData.get("body");
-    
-    if (formData.get("title") == null) 
+    if (title == null) 
     {
-        console.log(formData);
         setErrorMessage("A title is required.");
         return;
     }
 
-    if (formData.get("community") == null)
+    if (community == null)
     {
-        console.log(formData);
         setErrorMessage("A community is required.")
         return;
     }
 
     try {
-        await axios.post('http://localhost:5000/api/createthread', {community, title, link, body, token});
+        await axios.post('http://localhost:5000/api/createthread', {community, title, link, bodyHTML, token});
     } catch (err: any) {
         console.log(err);
     }

@@ -1,8 +1,3 @@
-.username {
-  font-weight: bold;
-  color: #bb3733;
-}
-
 .createThreadForm {
   margin: 10px;
   border-radius: 10px;
@@ -57,19 +52,24 @@
   color: lightgray;
 }
 
+.bodyEditorContainer {
+  min-height: 200px;
+}
+
 .titleInput:focus {
   outline: none;
 }
 
-#editor {
+.threadBodyEditor {
   background-color: #50485C;
   margin: 10px;
   color: white;
   border-radius: 10px;
+  min-height: 200px;
 }
 
 .inputTitleOptional {
-  font-sizE: 14px;
+  font-size: 14px;
   color: #50485C;
 }
 

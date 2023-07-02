@@ -1,6 +1,7 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import './Thread.css';
 import { Link } from 'react-router-dom';
+import { ReadOnlyTextEditor } from '../communities/textinput/TextEditor';
 
 export enum ThreadType 
 {
@@ -13,6 +14,7 @@ interface IThreadProps
     setActiveRef?: React.Dispatch<React.SetStateAction<React.MutableRefObject<undefined> | undefined>>
     databaseProps: IThreadDatabaseProps | null;
     inComments: boolean;
+    showBody: boolean,
 }
 
 export interface IThreadDatabaseProps
@@ -36,10 +38,36 @@ export const Thread = (props: IThreadProps | null) =>
         return null;
     }
 
+    const setActive = (activeRef: React.MutableRefObject<undefined> | undefined, setActiveFn: React.Dispatch<React.SetStateAction<React.MutableRefObject<undefined> | undefined>> | undefined) =>
+    {
+        if (!setActiveFn)
+        {
+            return;
+        }
+
+        if (refIsActive(ref, activeRef))
+        {
+            setActiveFn(undefined);
+        }
+        
+        else 
+        {
+            setActiveFn(ref);
+        }
+    }
+    
     const thumbnail = props.databaseProps.thumbnail ? props.databaseProps.thumbnail : "https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg";
     
-    return <div className="threadContainer" onClick={() => props.setActiveRef!(ref)} onFocus={() => props.setActiveRef!(ref)} tabIndex={0}>
-        <div className={"thread"+ activeRefClassOrNull(ref, props.activeRef)}>
+    return <div className="threadContainer" 
+                onClick={() => {setActive(props.activeRef, props.setActiveRef)}}
+                onKeyDown={(event) => {
+                   if (event.key === "Enter") 
+                   {
+                        setActive(props.activeRef, props.setActiveRef);
+                   }
+                }}
+                tabIndex={0}>
+        <div className={"thread" + activeRefClassOrNull(ref, props.activeRef)}>
             <div className="threadThumbnail">
                 <img alt="" src={thumbnail} height="50px" width="50px"></img>
             </div>
@@ -59,10 +87,27 @@ export const Thread = (props: IThreadProps | null) =>
                     <div className="threadLike"><button>Dislike</button></div>     
                 </div>
             </div>
+            {props.databaseProps.body ? <div className={"threadBodyText " + (props.showBody || refIsActive(ref, props.activeRef) ? "" : "nodisp")} ><ReadOnlyTextEditor body={props.databaseProps.body}/></div> : null }
+            
         </div>;
 }
 
 const activeRefClassOrNull = (ref: React.MutableRefObject<undefined>, activeRef: React.MutableRefObject<undefined> | undefined) =>
 {
-    return (ref === activeRef) ? " threadContainerActive" : ""
+    return refIsActive(ref, activeRef) ? " threadContainerActive" : ""
+}
+
+function refIsActive(ref: React.MutableRefObject<undefined>, activeRef: React.MutableRefObject<undefined> | undefined)
+{
+    if (ref === undefined) 
+    {
+        return false;
+    }
+    
+    if (activeRef === undefined)
+    {
+        return false;
+    }
+
+    return (ref === activeRef)
 }

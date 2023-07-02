@@ -66,7 +66,7 @@ router.post('/createthread', async (req: any, res) => {
         let username;
         let thumbnail = null;
 
-        const { community, title, link, body, token } = req.body;
+        const { community, title, link, bodyHTML, token } = req.body;
         
         jwt.verify(token, process.env.JWT_SECRET!, (err: any, decoded: any) => {
             if (err) {
@@ -90,7 +90,7 @@ router.post('/createthread', async (req: any, res) => {
         }
         
         const id = await pool.query("INSERT INTO threads (community_id, title, link, body, author_id, thumbnail) VALUES($1, $2, $3, $4, $5, $6) RETURNING id",
-            [communityInternalId, title, link, body, authorInternalId, thumbnail]
+            [communityInternalId, title, link, bodyHTML, authorInternalId, thumbnail]
         );
 
         if (id) {
@@ -124,6 +124,7 @@ router.get('/threads', async (req, res) => {
                 threads.title,
                 threads.creation_date,
                 threads.link,
+                threads.body,
                 threads.thumbnail
             FROM
                 threads

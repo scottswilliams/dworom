@@ -8,6 +8,7 @@ export const ThreadComponent: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [activeRef, setActiveRef] = useState<React.MutableRefObject<undefined>>();
+  const [showBody, setShowBody] = useState<boolean>(false);
   const requestedPages = useRef(new Set<number>());
 
   const observer = useRef<IntersectionObserver>();
@@ -49,8 +50,8 @@ export const ThreadComponent: React.FC = () => {
   return (
     <div>
       {threads.map((thread, index) => (
-        <div key={thread.id} ref={threads.length === index + 1 ? lastThreadElementRef : null}>
-            <Thread setActiveRef={setActiveRef} activeRef={activeRef} databaseProps={thread} inComments={true} />
+        <div key={thread.id} ref={(threads.length === index + 1) ? lastThreadElementRef : null}>
+            <Thread setActiveRef={setActiveRef} activeRef={activeRef} databaseProps={thread} inComments={true} showBody={showBody} />
         </div>
       ))}
       {isLoading && 'Loading...'}

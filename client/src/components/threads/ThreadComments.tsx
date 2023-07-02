@@ -35,7 +35,6 @@ export const ThreadComments = () =>
     }
 
     return <div>
-            <Thread databaseProps={data} inComments={false}></Thread>
-            <p>{data?.body}</p>
+            <Thread databaseProps={data} inComments={false} showBody={true}></Thread>
         </div>
 }

@@ -52,20 +52,25 @@
     color: lightgray;
 }
 
+.bodyEditorContainer
+{
+    min-height: 200px;
+}
+
 .titleInput:focus {
     outline: none;
 }
 
-#editor {
+.threadBodyEditor {
     background-color: $color-primary-1;
     margin: 10px;
     color: white;
     border-radius: 10px;
+    min-height: 200px;
 }
-
 .inputTitleOptional
 {
-    font-sizE: 14px;
+    font-size: 14px;
     color: $color-primary-1;
 }
 
