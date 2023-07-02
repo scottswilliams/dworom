@@ -1,4 +1,5 @@
-/* Basic editor styles */
+@import "../../../Themes.scss";
+
 .ProseMirror {
     margin: 10px;
     padding: 10px;
@@ -49,12 +50,32 @@
   
     blockquote {
       padding-left: 1rem;
-      border-left: 2px solid rgba(#0D0D0D, 0.1);
+      border-left: 2px solid rgba(#fff, 0.5);
     }
   
     hr {
       border: none;
-      border-top: 2px solid rgba(#0D0D0D, 0.1);
+      border-top: 2px solid rgba(#fff, 0.5);
       margin: 2rem 0;
     }
-  }
+}
+
+.textEditorButtons 
+{
+  margin: 10px;
+}
+
+.textEditorButtons > button
+{
+  margin: 2px;
+  background-color: $button-primary-1;
+  color: black;
+  border: 0;
+  border-radius: 5px;
+}
+
+.textEditorButtons > button:hover
+{
+  background-color: $button-primary-1-hover;
+  cursor: pointer;
+}

@@ -1,7 +1,8 @@
-import { useLoaderData, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { IThreadDatabaseProps, Thread } from "./Thread";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { CommentEditor } from "../communities/textinput/CommentEditor";
 
 
 export const ThreadComments = () =>
@@ -21,20 +22,21 @@ export const ThreadComments = () =>
         } catch (error) {
         console.error('Error fetching data:', error);
         } finally {
-        setIsLoading(false); // Set loading to false after fetching data
+        setIsLoading(false);
         }
     };
 
-    // Call the fetchData function
     fetchData();
-    }, [id]); // The effect depends on the 'id' parameter, re-run if 'id' changes
+    }, [id]);
 
-    // While the data is loading, you can return a loading message
     if (isLoading) {
     return <div>Loading...</div>;
     }
 
     return <div>
             <Thread databaseProps={data} inComments={false} showBody={true}></Thread>
+            <div className="threadTopLevelCommentBox">
+              <CommentEditor threadId={id!} parentCommentId={null} />
+            </div>
         </div>
 }

@@ -77,13 +77,33 @@
     color: lightgray;
 }
 
-.threadAuthor
-{
+.threadAuthor{
     color: orange;
 }
 
-.threadCommunity
-{
+.threadCommunity{
     color: purple;
 }
 
+.threadTopLevelCommentBox {
+    margin: 10px;
+    max-width: 50%;
+}
+
+.threadPostComment {
+    margin: 10px;
+    text-align: right;
+}
+
+.threadPostComment > button {
+    background-color: $button-primary-1;
+    font-size: 15px;
+    border: 0;
+    padding: 5px 10px 5px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.threadPostComment > button:hover {
+    background-color: $button-primary-1-hover;
+}

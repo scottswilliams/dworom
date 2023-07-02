@@ -5,6 +5,8 @@ import 'dotenv';
 import authenticateToken from './middleware/auth/AuthenticateToken';
 import { pool } from './db';
 import { thumbnailCrawler } from './apps/thumbnailCrawler';
+import sanitizeHtml from 'sanitize-html';
+import { threadId } from 'worker_threads';
 
 const router = express.Router();
 
@@ -77,7 +79,8 @@ router.post('/createthread', async (req: any, res) => {
                 username = decoded.username;
             }
           });
-
+        
+        const sanitizedHTML = sanitizeHtml(bodyHTML);
 
         const communityResult= await pool.query("SELECT id FROM communities WHERE name = $1", [community]);
         const communityInternalId = communityResult.rows[0].id;
@@ -90,7 +93,7 @@ router.post('/createthread', async (req: any, res) => {
         }
         
         const id = await pool.query("INSERT INTO threads (community_id, title, link, body, author_id, thumbnail) VALUES($1, $2, $3, $4, $5, $6) RETURNING id",
-            [communityInternalId, title, link, bodyHTML, authorInternalId, thumbnail]
+            [communityInternalId, title, link, sanitizedHTML, authorInternalId, thumbnail]
         );
 
         if (id) {
@@ -163,14 +166,14 @@ router.get('/thread/:id', async (req, res) => {
     try {
         const { rows } = await pool.query(`
             SELECT 
-            threads.id,
-            communities.name AS community_name,
-            users.username AS author_username,
-            threads.title,
-            threads.creation_date,
-            threads.link,
-            threads.body,
-            threads.thumbnail FROM threads
+                threads.id,
+                communities.name AS community_name,
+                users.username AS author_username,
+                threads.title,
+                threads.creation_date,
+                threads.link,
+                threads.body,
+                threads.thumbnail FROM threads
             JOIN
                 communities ON threads.community_id = communities.id
             JOIN
@@ -194,6 +197,49 @@ router.get('/thread/:id', async (req, res) => {
     catch (error) {
         console.error(error);
         res.status(500).send('Error fetching thread');
+    }
+
+});
+
+router.post('/submitComment', async (req, res) =>
+{
+    let username;
+
+    const [threadId, parentCommentId, commentBodyHTML, token] = req.body;
+    jwt.verify(token, process.env.JWT_SECRET!, (err: any, decoded: any) => {
+        if (err) {
+          return res.status(403).json({ message: 'Failed to authenticate token' });
+        }
+        else
+        {
+            username = decoded.username;
+        }
+      });
+
+    const sanitizedHTML = sanitizeHtml(commentBodyHTML);
+
+    const authorResult = await pool.query("SELECT id FROM users WHERE username = $1", [username]);
+    const authorInternalId = authorResult.rows[0].id;
+
+    const communityResult = await pool.query("SELECT community_id FROM threads WHERE id = $1", [threadId])
+    const communityInternalId = communityResult.rows[0].community_id;
+
+    try {
+        return await pool.query(`
+        INSERT INTO comments
+            (author_id,
+            community_id,
+            thread_id,
+            parent_comment_id,
+            body)
+        VALUES ($1, $2, $3, $4, $5)
+        RETURNING
+            id
+        `,
+        [authorInternalId, communityInternalId, threadId, parentCommentId, sanitizedHTML]);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Error saving comment to the database.');
     }
 
 });

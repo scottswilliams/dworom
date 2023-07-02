@@ -58,7 +58,7 @@
   
   .register-button {
     width: 100%;
-    background-color: #c46360;
+    background-color: $button-primary-1;
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
@@ -68,6 +68,6 @@
   }
   
   .register-button:hover {
-    background-color: #552827;
+    background-color: $button-primary-1-hover;
   }
   

@@ -2,17 +2,39 @@ import './EditorStyles.css'
 
 import ListItem from '@tiptap/extension-list-item';
 import TextStyle from '@tiptap/extension-text-style';
+import Link from '@tiptap/extension-link'
 import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-import React from 'react';
+import { useCallback, React } from 'react';
 
 const MenuBar = ({ editor }) => {
+
+  const toggleLink = useCallback(() => {
+    const previousUrl = editor.getAttributes('link').href
+    const url = window.prompt('URL', previousUrl)
+
+    if (url === null) {
+      return
+    }
+
+    if (url === '') {
+      editor.chain().focus().extendMarkRange('link').unsetLink()
+        .run()
+      return
+    }
+    
+    editor.chain().focus().extendMarkRange('link').setLink({ href: url })
+      .run()
+  }, [editor]);
+
   if (!editor) {
     return null
   }
 
+
+
   return (
-    <>
+    <div className="textEditorButtons">
       <button
         onClick={() => editor.chain().focus().toggleBold().run()}
         disabled={
@@ -51,6 +73,9 @@ const MenuBar = ({ editor }) => {
         className={editor.isActive('strike') ? 'is-active' : ''}
       >
         strike
+      </button>
+      <button onClick={toggleLink}>
+        link
       </button>
       <button
         onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
@@ -92,28 +117,28 @@ const MenuBar = ({ editor }) => {
         onClick={() => editor.chain().focus().toggleBulletList().run()}
         className={editor.isActive('bulletList') ? 'is-active' : ''}
       >
-        bullet list
+        &#8226;
       </button>
       <button
         onClick={() => editor.chain().focus().toggleOrderedList().run()}
         className={editor.isActive('orderedList') ? 'is-active' : ''}
       >
-        ordered list
+        1.
       </button>
       <button
         onClick={() => editor.chain().focus().toggleCodeBlock().run()}
         className={editor.isActive('codeBlock') ? 'is-active' : ''}
       >
-        code block
+        code
       </button>
       <button
         onClick={() => editor.chain().focus().setBlockquote().run()}
         className={editor.isActive('blockquote') ? 'is-active' : ''}
       >
-        blockquote
+        quote
       </button>
       <button onClick={() => editor.chain().focus().setHorizontalRule().run()}>
-        horizontal rule
+        horiz. line
       </button>
       <button
         onClick={() => editor.chain().focus().undo().run()}
@@ -139,7 +164,7 @@ const MenuBar = ({ editor }) => {
       >
         redo
       </button>
-    </>
+    </div>
   )
 }
 
@@ -156,6 +181,9 @@ export const TextEditor = (props) => {
           keepMarks: true,
           keepAttributes: false, // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
         },
+      }),
+      Link.configure({
+        openOnClick: false
       }),
     ],
     content: ``,

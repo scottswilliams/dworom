@@ -82,4 +82,27 @@
 
 .threadCommunity {
   color: purple;
+}
+
+.threadTopLevelCommentBox {
+  margin: 10px;
+  max-width: 50%;
+}
+
+.threadPostComment {
+  margin: 10px;
+  text-align: right;
+}
+
+.threadPostComment > button {
+  background-color: #c46360;
+  font-size: 15px;
+  border: 0;
+  padding: 5px 10px 5px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.threadPostComment > button:hover {
+  background-color: #552827;
 }/*# sourceMappingURL=Thread.css.map */

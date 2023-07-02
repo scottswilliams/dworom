@@ -1,19 +1,17 @@
 import "./CreateThread.css";
-import { Dispatch, FormEvent, SetStateAction, useContext, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useState } from "react";
 import axios from "axios";
 import { AuthContext } from "../Home";
-import { EditorContent, useEditor } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
 import { TextEditor } from "../textinput/TextEditor";
 
 export const CreateThread = () =>
 {
     const authContext = useContext(AuthContext);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
-    const [title, setTitle] = useState<String | null>(null);
-    const [community, setCommunity] = useState<String | null>(null);
-    const [link, setLink] = useState<String | null>(null);
-    const [bodyHTML, setBodyHTML] = useState<String | null>(null);
+    const [title, setTitle] = useState<string | null>(null);
+    const [community, setCommunity] = useState<string | null>(null);
+    const [link, setLink] = useState<string | null>(null);
+    const [bodyHTML, setBodyHTML] = useState<string | null>(null);
     
     return <div className="createThreadForm">
         <div className="createThreadFormTitle">Create a Thread</div>
@@ -28,7 +26,7 @@ export const CreateThread = () =>
 }
 
 interface IThreadTextField {
-    setTextField: Dispatch<SetStateAction<String | null>>,
+    setTextField: Dispatch<SetStateAction<string | null>>,
 }
 
 const CommunityEditor = (props: IThreadTextField) =>
@@ -77,7 +75,7 @@ const ErrorMessage = (props: IErrorMessageProps) =>
     }
 }
 
-async function tryCreateThread(title: String | null, community: String | null, link: String | null, bodyHTML: String | null, setErrorMessage: Dispatch<SetStateAction<string | null>>, token: string | null)
+async function tryCreateThread(title: string | null, community: string | null, link: string | null, bodyHTML: string | null, setErrorMessage: Dispatch<SetStateAction<string | null>>, token: string | null)
 {
     if (title == null) 
     {
