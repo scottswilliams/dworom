@@ -6,7 +6,6 @@ import authenticateToken from './middleware/auth/AuthenticateToken';
 import { pool } from './db';
 import { thumbnailCrawler } from './apps/thumbnailCrawler';
 import sanitizeHtml from 'sanitize-html';
-import { threadId } from 'worker_threads';
 
 const router = express.Router();
 
@@ -79,8 +78,9 @@ router.post('/createthread', async (req: any, res) => {
                 username = decoded.username;
             }
           });
-        
+        console.log(bodyHTML);
         const sanitizedHTML = sanitizeHtml(bodyHTML);
+        console.log(sanitizedHTML);
 
         const communityResult= await pool.query("SELECT id FROM communities WHERE name = $1", [community]);
         const communityInternalId = communityResult.rows[0].id;
@@ -215,8 +215,9 @@ router.post('/submitComment', async (req, res) =>
             username = decoded.username;
         }
       });
-
+    console.log('\n',"Dirty: ", commentBodyHTML);
     const sanitizedHTML = sanitizeHtml(commentBodyHTML);
+    console.log('\n',"Sanitized: ", sanitizedHTML);
 
     const authorResult = await pool.query("SELECT id FROM users WHERE username = $1", [username]);
     const authorInternalId = authorResult.rows[0].id;

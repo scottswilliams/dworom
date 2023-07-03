@@ -32,8 +32,9 @@
 }
 
 .ProseMirror {
+  padding: 2px;
   margin: 10px;
-  padding: 10px;
+  min-height: 100px;
   color: #ffffff;
 }
 .ProseMirror > * + * {
@@ -94,6 +95,7 @@
 }
 
 .commentBox {
+  margin: 10px;
   border: 1px solid #233041;
 }
 .commentBox .ProseMirror {

@@ -29,24 +29,28 @@ export const Comment = (props: ICommentProps) =>
 
     const creationDate = new Date(props.databaseProps?.creation_date!);
 
-    return <div className={"commentBodyContainer" + ((props.commentDepth % 2) === 0 ? " darkerCommentContainer" : "")}>
-            <VotingBox voteState={VoteState.None} />
-            <div className="commentContent">
+    return <div className={"commentContainer" + ((props.commentDepth % 2) === 0 ? " darkerContainer" : "")}>
+        <div className="commentVoteInfoAndBodyContainer">
+            <div className={(props.isCollapsed ? "nodisp" : "")}><VotingBox voteState={VoteState.None} /></div>
+            
+            <div className="commentInfoAndBodyContainer">
                 <div className="commentInfoBar">
                     <span className="commentUsername">{props.databaseProps?.author_username}</span> at <span className="commentDate">{creationDate.toLocaleTimeString()}</span>
                 </div>
-                <div className={"collapsableContent " + (props.isCollapsed ? "nodisp" : "")}>
-                    <div className="commentBody"><ReadOnlyTextEditor body={props.databaseProps?.body}/></div>
-                    <div className="commentButtons">
-                        <button className="commentButton" onClick={() => setShowReplyBox(!showReplyBox)}>{showReplyBox ? "Cancel" : "Reply"}</button>
-                    </div>
-                    <div className={"commentReplyBox " + (showReplyBox ? "" : "nodisp")}>
-                        <CommentEditor threadId={props.threadId} parentCommentId={props.databaseProps?.id!} />
-                    </div>
-                    <CommentsRepeater threadId={props.threadId} parentCommentId={props.databaseProps?.id!} commentDepth={props.commentDepth + 1} />
-                </div>
+                <div className={"commentBody" + (props.isCollapsed ? " nodisp" : "")}><ReadOnlyTextEditor body={props.databaseProps?.body}/></div>
             </div>
+        </div>
+        <div className={"commentRepliesContainer" + (props.isCollapsed ? " nodisp" : "")}>
+            <div className="commentButtons">
+                <button className="commentButton" onClick={() => setShowReplyBox(!showReplyBox)}>{showReplyBox ? "Cancel" : "Reply"}</button>
+            </div>
+            <div className={"commentReplyBox " + (showReplyBox ? "" : "nodisp")}>
+                <CommentEditor threadId={props.threadId} parentCommentId={props.databaseProps?.id!} />
+            </div>
+            <CommentsRepeater threadId={props.threadId} parentCommentId={props.databaseProps?.id!} commentDepth={props.commentDepth + 1} />
+        </div>
     </div>
+
 }
 
 export const CommentContainer = (props: ICommentProps) =>

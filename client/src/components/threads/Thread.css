@@ -36,6 +36,11 @@
   height: 100%;
 }
 
+.thread {
+  display: flex;
+  flex-direction: row;
+}
+
 .threadContainer {
   border-bottom: 1px solid #282c37;
   margin-left: 10px;
@@ -46,7 +51,8 @@
   background-color: #333846;
 }
 
-.thread {
+.threadLeftContainer {
+  width: 100%;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -124,10 +130,13 @@
   margin: 20px;
 }
 
-.threadComments {
-  height: 80%;
-  margin: 5px;
+.threadComments > a > svg {
+  margin: auto;
 }
-.threadComments .button, .threadComments .threadPostComment > button {
-  height: 100%;
+.threadComments > a > svg:hover {
+  fill: white;
+}
+
+.threadBodyText .ProseMirror {
+  min-height: 0;
 }/*# sourceMappingURL=Thread.css.map */

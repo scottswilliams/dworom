@@ -69,25 +69,29 @@ export const Thread = (props: IThreadProps | null) =>
                 }}
                 tabIndex={0}>
         <div className={"thread" + activeRefClassOrNull(ref, props.activeRef)}>
-            <div className="threadTopContainer">
-                <VotingBox />
-                <div className="threadThumbnail">
-                    <img alt="" src={thumbnail} height="50px" width="50px"></img>
+            <div className="threadLeftContainer">
+                <div className="threadTopContainer">
+                    <VotingBox />
+                    <div className="threadThumbnail">
+                        <img alt="" src={thumbnail} height="50px" width="50px"></img>
+                    </div>
+                    <div className="threadTitle">
+                        <a className="threadLink" href={props.databaseProps.link}>{props.databaseProps.title}</a>
+                    </div>
                 </div>
-                <div className="threadTitle">
-                    <a className="threadLink" href={props.databaseProps.link}>{props.databaseProps.title}</a>
+                <div className="threadInfo">
+                    <span className="threadInfo">by <span className="threadAuthor">{props.databaseProps.author_username}</span> in community <span className="threadCommunity">{props.databaseProps.community_name}</span> at <span className="threadTimestamp">{new Date(props.databaseProps.creation_date).toLocaleString()}</span> </span>
                 </div>
-                <div className="threadButtons">
+            </div>
+            <div className="threadButtons">
                     <div className="threadComments">
                         {props.inComments ? 
-                        <Link to={"/c/" + props.databaseProps.community_name + "/threads/" + props.databaseProps.id}><button className="button">Comments</button></Link>
+                        <Link to={"/c/" + props.databaseProps.community_name + "/threads/" + props.databaseProps.id}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                        </Link>
                         : null }
                     </div>
                 </div>
-            </div>
-            <div className="threadInfo">
-                <span className="threadInfo">by <span className="threadAuthor">{props.databaseProps.author_username}</span> in community <span className="threadCommunity">{props.databaseProps.community_name}</span> at <span className="threadTimestamp">{new Date(props.databaseProps.creation_date).toLocaleString()}</span> </span>
-            </div>
         </div>
         {props.databaseProps.body ? <div className={"threadBodyText " + (props.showBody || refIsActive(ref, props.activeRef) ? "" : "nodisp")} ><ReadOnlyTextEditor body={props.databaseProps.body}/></div> : null }
             

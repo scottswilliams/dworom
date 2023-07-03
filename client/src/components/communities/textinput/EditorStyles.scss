@@ -1,8 +1,9 @@
 @import "../../../Themes.scss";
 
 .ProseMirror {
+    padding: 2px;
     margin: 10px;
-    padding: 10px;
+    min-height: 100px;
     color: $primary-text-color;
     > * + * {
       margin-top: 0.75em;
@@ -74,7 +75,7 @@
 }
 
 .commentBox {
-   
+   margin: 10px;
     border: 1px solid darken($ui-primary-color, 50%);
     
     & .ProseMirror {

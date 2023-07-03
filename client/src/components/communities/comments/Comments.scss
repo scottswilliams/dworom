@@ -62,18 +62,18 @@
     }
 }
 
-.commentBodyContainer {
+.commentContainer {
     background-color: $ui-base-color;
     margin: 20px 0 0 0px;
     padding: 5px 0 0 5px;
     border-radius: 5px;
     color: $passive-text-color;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     width: 100%;
 }
 
-.commentBodyContainer .darkerCommentContainer
+.commentContainer .darkerContainer
 {
     background-color: darken($ui-base-color, 3%);
 }
@@ -83,10 +83,6 @@
 }
 .commentUsername {
     color: orange;
-}
-
-.commentBody .ProseMirror {
-    max-width: 50%;
 }
 
 .commentButton {
@@ -101,4 +97,25 @@
 
 .nodisp {
     display: none;
+}
+
+.commentBody .ProseMirror
+{
+    padding: 0;
+    min-height: 0;
+}
+
+.commentVoteInfoAndBodyContainer {
+    display: flex;
+    flex-direction: row;
+
+    & .voteBox {
+        margin: 5px;
+    }
+}
+
+
+.commentInfoAndBodyContainer {
+    display: flex;
+    flex-direction: column;
 }

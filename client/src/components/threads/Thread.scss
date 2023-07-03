@@ -5,16 +5,24 @@
     height: 100%;
 }
 
+.thread 
+{
+    display: flex;
+    flex-direction: row;
+}
+
 .threadContainer {
     border-bottom: 1px solid $classic-base-color;
     margin-left: 10px;
     width: 100%;
 }
+
 .threadContainerActive {
     background-color: lighten($classic-base-color, 5%);
 }
 
-.thread {
+.threadLeftContainer {
+    width: 100%;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -98,11 +106,15 @@
 }
 
 .threadComments {
-    height: 80%;
-    margin: 5px;
-    
-    & .button
-    {
-        height: 100%;
+    & > a > svg {
+        margin: auto;
     }
+
+    & > a > svg:hover {
+        fill: white;
+    }
+}
+
+.threadBodyText .ProseMirror {
+    min-height: 0;
 }
