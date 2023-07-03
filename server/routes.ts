@@ -244,4 +244,66 @@ router.post('/submitComment', async (req, res) =>
 
 });
 
+router.get('/thread/:id/comments/:parentId?', async (req, res) => {
+    const threadId = req.params.id
+    const parentId = req.params.parentId;
+
+    const page = parseInt(req.query.page as string) || 1; //  Number of pages we've already loaded
+    const limit = 10; // Number of threads per page
+    const offset = (page - 1) * limit; // Number of threads we've already loaded
+
+    try {
+        let rows;
+
+        if (parentId) 
+        {
+            ({rows} = await pool.query(`
+            SELECT 
+                comments.id,
+                users.username AS author_username,
+                comments.body,
+                comments.creation_date
+            FROM
+                comments
+            JOIN
+                users ON comments.author_id = users.id
+            WHERE
+                comments.thread_id = $1
+                AND comments.parent_comment_id = $2
+            OFFSET
+                $3
+            LIMIT
+                $4;`,
+            [threadId, parentId, offset, limit])); 
+        }
+
+        else {
+            ({rows} = await pool.query(`
+                SELECT 
+                    comments.id,
+                    users.username AS author_username,
+                    comments.body,
+                    comments.creation_date
+                FROM
+                    comments
+                JOIN
+                    users ON comments.author_id = users.id
+                WHERE
+                    comments.thread_id = $1
+                    AND comments.parent_comment_id IS NULL
+                OFFSET
+                    $2
+                LIMIT
+                    $3;`,
+                [threadId, offset, limit]));
+        }
+
+        res.json(rows);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error fetching threads');
+    }
+});
+
 export default router;

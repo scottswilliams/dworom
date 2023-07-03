@@ -85,9 +85,10 @@
     color: purple;
 }
 
-.threadTopLevelCommentBox {
+.threadTopLevelCommentBox .ProseMirror {
     margin: 10px;
     max-width: 50%;
+    background-color: $color-primary-1;
 }
 
 .threadPostComment {

@@ -1,0 +1,45 @@
+@import "../../../Themes.scss";
+
+.commentContainer {
+    background-color: $color-primary-1;
+    margin: 20px;
+    padding: 5px;
+    border-radius: 5px;
+    color: darkgray;
+}
+
+.commentContainer .darkerCommentContainer
+{
+    background-color: $color-primary-2;
+}
+
+.commentInfoBar {
+    margin: 5px;
+}
+.commentUsername {
+    color: orange;
+}
+
+.commentBody .ProseMirror {
+    max-width: 50%;
+}
+
+.commentButtons {
+    text-align: right;
+}
+.commentButton {
+    background-color: $button-primary-1;
+    border: 0;
+    border-radius: 5px;
+    padding: 5px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.commentButton:hover {
+    background-color: $button-primary-1;
+}
+
+.nodisp {
+    display: none;
+}

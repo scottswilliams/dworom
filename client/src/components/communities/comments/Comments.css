@@ -1,0 +1,44 @@
+.commentContainer {
+  background-color: #50485C;
+  margin: 20px;
+  padding: 5px;
+  border-radius: 5px;
+  color: darkgray;
+}
+
+.commentContainer .darkerCommentContainer {
+  background-color: #393441;
+}
+
+.commentInfoBar {
+  margin: 5px;
+}
+
+.commentUsername {
+  color: orange;
+}
+
+.commentBody .ProseMirror {
+  max-width: 50%;
+}
+
+.commentButtons {
+  text-align: right;
+}
+
+.commentButton {
+  background-color: #c46360;
+  border: 0;
+  border-radius: 5px;
+  padding: 5px;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.commentButton:hover {
+  background-color: #c46360;
+}
+
+.nodisp {
+  display: none;
+}/*# sourceMappingURL=Comments.css.map */

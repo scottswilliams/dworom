@@ -56,6 +56,10 @@
   min-height: 200px;
 }
 
+.bodyEditorContainer .ProseMirror {
+  background-color: #50485C;
+}
+
 .titleInput:focus {
   outline: none;
 }

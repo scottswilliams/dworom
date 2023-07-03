@@ -3,6 +3,7 @@ import { IThreadDatabaseProps, Thread } from "./Thread";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { CommentEditor } from "../communities/textinput/CommentEditor";
+import CommentsRepeater from "../communities/comments/CommentsRepeater";
 
 
 export const ThreadComments = () =>
@@ -38,5 +39,6 @@ export const ThreadComments = () =>
             <div className="threadTopLevelCommentBox">
               <CommentEditor threadId={id!} parentCommentId={null} />
             </div>
+			<CommentsRepeater threadId={id!} commentDepth={1} />
         </div>
 }
