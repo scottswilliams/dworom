@@ -1,3 +1,36 @@
+.button, .sidebarButton {
+  background-color: #a04e4c;
+  border: 10px none;
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: inherit;
+  font-size: 15px;
+  letter-spacing: 0;
+  line-height: 22px;
+  overflow: hidden;
+  padding: 7px 18px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: auto;
+  font-weight: bold;
+}
+.button:active, .sidebarButton:active, .button:focus, .sidebarButton:focus, .button:hover, .sidebarButton:hover {
+  background-color: #a7514f;
+}
+
+:root {
+  --dropdown-border-color: #42485a;
+  --dropdown-background-color: #313543;
+  --dropdown-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.25),
+    0 8px 10px -6px rgba(0, 0, 0, 0.25);
+}
+
 .mainSidebarContainer {
   margin: 5px;
   display: flex;
@@ -10,7 +43,7 @@
   flex-direction: column;
   margin: 10px;
   width: 80%;
-  background-color: #564458;
+  background-color: #282c37;
   padding: 20px;
   border-radius: 20px;
 }
@@ -31,20 +64,10 @@
 }
 
 .sidebarButton {
-  font-size: 16px;
-  background-color: #c46360;
-  color: #241B25;
-  padding: 10px;
-  margin: 10px auto 10px auto;
-  border: none;
-  border-radius: 30px;
-  cursor: pointer;
-  margin-right: 10px;
   width: 100%;
-}
-
-.sidebarButton:hover {
-  background-color: #a7514f;
+  border-radius: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .creationButtons {

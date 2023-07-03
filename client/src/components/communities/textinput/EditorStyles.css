@@ -1,7 +1,40 @@
+.button, .textEditorButtons > button {
+  background-color: #994a48;
+  border: 10px none;
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: inherit;
+  font-size: 15px;
+  letter-spacing: 0;
+  line-height: 22px;
+  overflow: hidden;
+  padding: 7px 18px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: auto;
+  font-weight: bold;
+}
+.button:active, .textEditorButtons > button:active, .button:focus, .textEditorButtons > button:focus, .button:hover, .textEditorButtons > button:hover {
+  background-color: #a7514f;
+}
+
+:root {
+  --dropdown-border-color: #42485a;
+  --dropdown-background-color: #313543;
+  --dropdown-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.25),
+    0 8px 10px -6px rgba(0, 0, 0, 0.25);
+}
+
 .ProseMirror {
   margin: 10px;
   padding: 10px;
-  color: white;
+  color: #ffffff;
 }
 .ProseMirror > * + * {
   margin-top: 0.75em;
@@ -19,12 +52,12 @@
   line-height: 1.1;
 }
 .ProseMirror code {
-  background-color: rgba(97, 97, 97, 0.1);
-  color: #616161;
+  background-color: rgba(217, 225, 232, 0.1);
+  color: #d9e1e8;
 }
 .ProseMirror pre {
-  background: #0D0D0D;
-  color: #FFF;
+  background: #282c37;
+  color: #ffffff;
   font-family: "JetBrainsMono", monospace;
   padding: 0.75rem 1rem;
   border-radius: 0.5rem;
@@ -50,18 +83,23 @@
 }
 
 .textEditorButtons {
-  margin: 10px;
+  margin: 5px;
 }
 
 .textEditorButtons > button {
-  margin: 2px;
-  background-color: #c46360;
-  color: black;
-  border: 0;
-  border-radius: 5px;
+  font-size: 12px;
+  margin: 2px 5px 2px 5px;
+  padding: 5px;
+  font-weight: normal;
 }
 
-.textEditorButtons > button:hover {
-  background-color: #552827;
-  cursor: pointer;
+.commentBox {
+  border: 1px solid #233041;
+}
+.commentBox .ProseMirror {
+  background-color: #ffffff;
+  color: #000000;
+}
+.commentReplyBox > .commentBox {
+  border: 1px solid #486082;
 }/*# sourceMappingURL=EditorStyles.css.map */

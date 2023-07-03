@@ -3,7 +3,7 @@
 .ProseMirror {
     margin: 10px;
     padding: 10px;
-    color: white;
+    color: $primary-text-color;
     > * + * {
       margin-top: 0.75em;
     }
@@ -23,13 +23,13 @@
     }
   
     code {
-      background-color: rgba(#616161, 0.1);
-      color: #616161;
+      background-color: rgba($classic-secondary-color, 0.1);
+      color: $secondary-text-color;
     }
   
     pre {
-      background: #0D0D0D;
-      color: #FFF;
+      background: $classic-base-color;
+      color: $primary-text-color;
       font-family: 'JetBrainsMono', monospace;
       padding: 0.75rem 1rem;
       border-radius: 0.5rem;
@@ -61,20 +61,28 @@
 
 .textEditorButtons 
 {
-  margin: 10px;
+  margin: 5px;
 }
 
 .textEditorButtons > button
 {
-  margin: 2px;
-  background-color: $button-primary-1;
-  color: black;
-  border: 0;
-  border-radius: 5px;
+  @extend .button;
+  font-size: 12px;
+  margin: 2px 5px 2px 5px;
+  padding: 5px;
+  font-weight: normal;
 }
 
-.textEditorButtons > button:hover
-{
-  background-color: $button-primary-1-hover;
-  cursor: pointer;
+.commentBox {
+   
+    border: 1px solid darken($ui-primary-color, 50%);
+    
+    & .ProseMirror {
+        background-color: $white;
+        color: $black;
+    }
+
+    .commentReplyBox > & {
+        border: 1px solid darken($ui-primary-color, 30%);
+    }
 }

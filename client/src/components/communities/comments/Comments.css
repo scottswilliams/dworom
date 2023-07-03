@@ -1,13 +1,105 @@
-.commentContainer {
-  background-color: #50485C;
-  margin: 20px;
-  padding: 5px;
-  border-radius: 5px;
-  color: darkgray;
+.button, .commentButton {
+  background-color: #994a48;
+  border: 10px none;
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: inherit;
+  font-size: 15px;
+  letter-spacing: 0;
+  line-height: 22px;
+  overflow: hidden;
+  padding: 7px 18px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: auto;
+  font-weight: bold;
+}
+.button:active, .commentButton:active, .button:focus, .commentButton:focus, .button:hover, .commentButton:hover {
+  background-color: #a7514f;
 }
 
-.commentContainer .darkerCommentContainer {
-  background-color: #393441;
+:root {
+  --dropdown-border-color: #42485a;
+  --dropdown-background-color: #313543;
+  --dropdown-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.25),
+    0 8px 10px -6px rgba(0, 0, 0, 0.25);
+}
+
+.commentCollapseContainer {
+  display: flex;
+  flex-direction: row;
+  margin-top: 15px;
+}
+
+.commentCollapseButtonContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.commentCollapseButton {
+  border-radius: 50%;
+  border: 1px solid #486082;
+  height: 24px;
+  width: 24px;
+  min-height: 24px;
+  min-width: 24px;
+  margin-top: 30px;
+}
+.commentCollapseButton::before {
+  border-style: solid;
+  border-width: 0.25em 0.25em 0 0;
+  content: "";
+  display: inline-block;
+  height: 12px;
+  transform: rotate(135deg);
+  vertical-align: center;
+  width: 12px;
+  position: relative;
+  color: #486082;
+  left: 4px;
+}
+.commentCollapseButtonContainer:hover .commentCollapseButton {
+  border: 1px solid #9baec8;
+}
+.commentCollapseButtonContainer:hover .commentCollapseButton::before {
+  color: #9baec8;
+}
+
+.collapsed {
+  transform: rotate(180deg);
+}
+
+.commentCollapseBar {
+  height: 100%;
+  margin: 0 20px 5px 20px;
+  width: 1px;
+  background-color: #486082;
+}
+.commentCollapseButtonContainer:hover .commentCollapseBar {
+  background-color: #9baec8;
+}
+
+.commentBodyContainer {
+  background-color: #282c37;
+  margin: 20px 0 0 0px;
+  padding: 5px 0 0 5px;
+  border-radius: 5px;
+  color: #ca8f04;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.commentBodyContainer .darkerCommentContainer {
+  background-color: #22252e;
 }
 
 .commentInfoBar {
@@ -22,21 +114,12 @@
   max-width: 50%;
 }
 
-.commentButtons {
-  text-align: right;
-}
-
 .commentButton {
-  background-color: #c46360;
-  border: 0;
-  border-radius: 5px;
-  padding: 5px;
-  cursor: pointer;
-  margin: 5px;
+  margin: 10px;
 }
 
-.commentButton:hover {
-  background-color: #c46360;
+.commentContent {
+  width: 100%;
 }
 
 .nodisp {

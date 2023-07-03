@@ -1,3 +1,36 @@
+.button {
+  background-color: #994a48;
+  border: 10px none;
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: inherit;
+  font-size: 15px;
+  letter-spacing: 0;
+  line-height: 22px;
+  overflow: hidden;
+  padding: 7px 18px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: auto;
+  font-weight: bold;
+}
+.button:active, .button:focus, .button:hover {
+  background-color: #a7514f;
+}
+
+:root {
+  --dropdown-border-color: #42485a;
+  --dropdown-background-color: #313543;
+  --dropdown-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.25),
+    0 8px 10px -6px rgba(0, 0, 0, 0.25);
+}
+
 .createThreadForm {
   margin: 10px;
   border-radius: 10px;
@@ -5,51 +38,43 @@
 }
 
 .titleInputTitle {
-  color: lightgray;
+  color: #ffffff;
 }
 
 .titleEditorContainer {
   margin: 10px;
 }
 
-.titleInputContainer {
+.inputContainer, .communityInputContainer {
   padding: 10px 15px 10px 15px;
-  background-color: #50485C;
+  background-color: #282c37;
   border-radius: 10px;
   margin-top: 5px;
 }
 
-.titleInput {
-  background-color: #50485C;
+.inputField, .communityInputField {
+  background-color: #282c37;
   border: none;
   width: 95%;
-  caret-color: white;
-  color: white;
+  caret-color: #ffffff;
+  color: #ffffff;
 }
 
 .communityInputContainer {
-  padding: 10px 15px 10px 15px;
-  background-color: #50485C;
-  border-radius: 10px;
-  margin-top: 5px;
   width: 25%;
 }
 
-.communityInput {
-  background-color: #50485C;
-  border: none;
-  caret-color: white;
-  color: white;
+.communityInputField {
   width: 200px;
 }
 
-.communityInput:focus {
+.communityInputField:focus {
   outline: none;
 }
 
 .bodyInputTitle {
   margin: 10px 0 10px 10px;
-  color: lightgray;
+  color: #ffffff;
 }
 
 .bodyEditorContainer {
@@ -57,38 +82,33 @@
 }
 
 .bodyEditorContainer .ProseMirror {
-  background-color: #50485C;
-}
-
-.titleInput:focus {
-  outline: none;
+  background-color: #282c37;
 }
 
 .threadBodyEditor {
-  background-color: #50485C;
+  background-color: #282c37;
   margin: 10px;
-  color: white;
+  color: #ffffff;
   border-radius: 10px;
   min-height: 200px;
 }
 
 .inputTitleOptional {
   font-size: 14px;
-  color: #50485C;
+  color: gray;
 }
 
 .createThreadButton {
-  background-color: #c46360;
-  color: white;
+  background-color: #595aff;
+  color: #ffffff;
   padding: 14px 20px;
   margin: 10px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
 }
-
 .createThreadButton:hover {
-  background-color: #552827;
+  background-color: #6364ff;
 }
 
 .createThreadErrorString {

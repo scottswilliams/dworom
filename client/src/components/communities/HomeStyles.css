@@ -3,7 +3,7 @@
   position: fixed;
   flex-direction: column;
   margin: 0;
-  border-right: 2px solid #393441;
+  border-right: 2px solid #573439;
   height: 100%;
   width: 110px;
 }
@@ -48,7 +48,7 @@
 }
 
 .linkButton:hover {
-  background-color: #3D313F;
+  background-color: #c46360;
 }
 
 .mainSidebarContainer {
@@ -63,7 +63,7 @@
   flex-direction: column;
   margin: 10px;
   width: 80%;
-  background-color: #564458;
+  background-color: #a95756;
   padding: 20px;
   border-radius: 20px;
 }
@@ -86,7 +86,7 @@
 .sidebarButton {
   font-size: 16px;
   background-color: #c46360;
-  color: #241B25;
+  color: #8d4c4d;
   padding: 10px;
   margin: 10px auto 10px auto;
   border: none;

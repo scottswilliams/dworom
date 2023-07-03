@@ -27,7 +27,7 @@ export const CommentEditor = (props: ICommentProps) =>
     return <div className="commentBox">
         <TextEditor setTextField={setCommentBodyHTML} />
         <div className="threadPostComment">
-            <button onClick={() => submitComment(props.threadId, props.parentCommentId, commentBodyHTML)}>Comment</button>
+            <button className="button" onClick={() => submitComment(props.threadId, props.parentCommentId, commentBodyHTML)}>Comment</button>
         </div>
     </div>
 }

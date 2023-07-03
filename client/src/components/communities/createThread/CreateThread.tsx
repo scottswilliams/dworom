@@ -20,7 +20,7 @@ export const CreateThread = () =>
         <TitleEditor setTextField={setTitle}/>
         <LinkEditor setTextField={setLink}/>
         <BodyEditor setTextField={setBodyHTML} />
-        <button onClick={() => tryCreateThread(title, community, link, bodyHTML, setErrorMessage, authContext.token)} className="createThreadButton" type="submit">Create Thread</button>
+        <button onClick={() => tryCreateThread(title, community, link, bodyHTML, setErrorMessage, authContext.token)} className="button" type="submit">Create Thread</button>
     </div>
 
 }
@@ -33,7 +33,7 @@ const CommunityEditor = (props: IThreadTextField) =>
 {
     return <div className="titleEditorContainer">
         <span className="titleInputTitle">Community</span> 
-        <div className="communityInputContainer"><input name="community" className="communityInput" onChange={(e) => props.setTextField(e.target.value)}></input></div>
+        <div className="communityInputContainer"><input name="community" className="communityInputField" onChange={(e) => props.setTextField(e.target.value)}></input></div>
     </div>
 }
 
@@ -41,7 +41,7 @@ const TitleEditor = (props: IThreadTextField) =>
 {
     return <div className="titleEditorContainer">
         <span className="titleInputTitle">Title</span>
-        <div className="titleInputContainer"><input name="title" className="titleInput" onChange={(e) => props.setTextField(e.target.value)}></input></div>
+        <div className="inputContainer"><input name="title" className="inputField" onChange={(e) => props.setTextField(e.target.value)}></input></div>
     </div>
 }
 
@@ -49,7 +49,7 @@ const LinkEditor = (props: IThreadTextField) =>
 {
     return <div className="titleEditorContainer">
         <span className="titleInputTitle">Link</span> <span className="inputTitleOptional">(optional)</span>
-        <div className="titleInputContainer"><input name="link" className="titleInput" onChange={(e) => props.setTextField(e.target.value)}></input></div>
+        <div className="inputContainer"><input name="link" className="inputField" onChange={(e) => props.setTextField(e.target.value)}></input></div>
     </div>
 }
 

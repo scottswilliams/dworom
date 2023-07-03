@@ -1,5 +1,8 @@
+@import "./Themes.scss";
+
 html {
-  background-color: $color-primary-0;
+  background: darken($ui-base-color, 7%);
+  scrollbar-color: #313543 rgba(0,0,0,.1);
 }
 
 body {

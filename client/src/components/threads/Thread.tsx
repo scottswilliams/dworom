@@ -1,7 +1,8 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import './Thread.css';
 import { Link } from 'react-router-dom';
 import { ReadOnlyTextEditor } from '../communities/textinput/TextEditor';
+import { VotingBox } from '../communities/voting/VotingBox';
 
 export enum ThreadType 
 {
@@ -68,28 +69,29 @@ export const Thread = (props: IThreadProps | null) =>
                 }}
                 tabIndex={0}>
         <div className={"thread" + activeRefClassOrNull(ref, props.activeRef)}>
-            <div className="threadThumbnail">
-                <img alt="" src={thumbnail} height="50px" width="50px"></img>
-            </div>
-            <div className="threadTitle">
-                <a className="threadLink" href={props.databaseProps.link}>{props.databaseProps.title}</a>
+            <div className="threadTopContainer">
+                <VotingBox />
+                <div className="threadThumbnail">
+                    <img alt="" src={thumbnail} height="50px" width="50px"></img>
+                </div>
+                <div className="threadTitle">
+                    <a className="threadLink" href={props.databaseProps.link}>{props.databaseProps.title}</a>
+                </div>
+                <div className="threadButtons">
+                    <div className="threadComments">
+                        {props.inComments ? 
+                        <Link to={"/c/" + props.databaseProps.community_name + "/threads/" + props.databaseProps.id}><button className="button">Comments</button></Link>
+                        : null }
+                    </div>
+                </div>
             </div>
             <div className="threadInfo">
                 <span className="threadInfo">by <span className="threadAuthor">{props.databaseProps.author_username}</span> in community <span className="threadCommunity">{props.databaseProps.community_name}</span> at <span className="threadTimestamp">{new Date(props.databaseProps.creation_date).toLocaleString()}</span> </span>
             </div>
-                <div className="threadButtons">
-                    <div className="threadComments">
-                        {props.inComments ? 
-                        <Link to={"/c/" + props.databaseProps.community_name + "/threads/" + props.databaseProps.id}><button>Comments</button></Link>
-                        : null }
-                    </div>
-                    <div className="threadDislike"><button>Like</button></div>
-                    <div className="threadLike"><button>Dislike</button></div>     
-                </div>
-            </div>
-            {props.databaseProps.body ? <div className={"threadBodyText " + (props.showBody || refIsActive(ref, props.activeRef) ? "" : "nodisp")} ><ReadOnlyTextEditor body={props.databaseProps.body}/></div> : null }
+        </div>
+        {props.databaseProps.body ? <div className={"threadBodyText " + (props.showBody || refIsActive(ref, props.activeRef) ? "" : "nodisp")} ><ReadOnlyTextEditor body={props.databaseProps.body}/></div> : null }
             
-        </div>;
+    </div>;
 }
 
 const activeRefClassOrNull = (ref: React.MutableRefObject<undefined>, activeRef: React.MutableRefObject<undefined> | undefined) =>

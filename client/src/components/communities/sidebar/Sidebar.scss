@@ -12,7 +12,7 @@
     flex-direction: column;
     margin: 10px;
     width: 80%;
-    background-color: $color-secondary-1-1;
+    background-color: $classic-base-color;
     padding: 20px;
     border-radius: 20px;
 }
@@ -33,22 +33,13 @@
 }
 
 .sidebarButton {
-    font-size: 16px;
-    background-color: #c46360;
-    color: $color-secondary-1-0;
-    padding: 10px;
-    margin: 10px auto 10px auto;
-    border: none;
-    border-radius: 30px;
-    cursor: pointer;
-    margin-right: 10px;
+    @extend .button;
     width: 100%;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
   }
 
-.sidebarButton:hover {
-    background-color: #a7514f;
-}
-  
 .creationButtons {
     display: flex;
     

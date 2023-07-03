@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Comment, ICommentDatabaseProps } from "./Comment";
+import { Comment, CommentContainer, ICommentDatabaseProps } from "./Comment";
 import axios, { AxiosResponse } from "axios";
 
 interface ICommentsRepeaterProps
@@ -15,7 +15,6 @@ export const CommentsRepeater = (props: ICommentsRepeaterProps) =>
     const [page, setPage] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
     const [hasMore, setHasMore] = useState(true);
-    const [activeRef, setActiveRef] = useState<React.MutableRefObject<undefined>>();
     const requestedPages = useRef(new Set<number>());
   
     const observer = useRef<IntersectionObserver>();
@@ -67,14 +66,14 @@ export const CommentsRepeater = (props: ICommentsRepeaterProps) =>
             fetchComments(page);
             requestedPages.current.add(page);
         }
-    }, [page, props.threadId]);
+    }, [page, props.threadId, props.parentCommentId]);
 
     return (
       <div>
         {comments.map((comment, index) => (
           <div key={comment.id} ref={(comments.length === index + 1) ? lastThreadElementRef : null}>
-              <Comment threadId={props.threadId!} setActiveRef={setActiveRef} activeRef={activeRef} databaseProps={comment} commentDepth={props.commentDepth}/>
-          </div>
+              <CommentContainer databaseProps={comment} threadId={props.threadId} commentDepth={props.commentDepth} isCollapsed={false} />
+            </div>
         ))}
         {isLoading && 'Loading...'}
       </div>

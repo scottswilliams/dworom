@@ -1,18 +1,62 @@
+.button {
+  background-color: #994a48;
+  border: 10px none;
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: inherit;
+  font-size: 15px;
+  letter-spacing: 0;
+  line-height: 22px;
+  overflow: hidden;
+  padding: 7px 18px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: auto;
+  font-weight: bold;
+}
+.button:active, .button:focus, .button:hover {
+  background-color: #a7514f;
+}
+
+:root {
+  --dropdown-border-color: #42485a;
+  --dropdown-background-color: #313543;
+  --dropdown-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.25),
+    0 8px 10px -6px rgba(0, 0, 0, 0.25);
+}
+
 .mainHeader {
   display: flex;
   position: fixed;
   flex-direction: column;
   margin: 0;
-  border-right: 2px solid #393441;
+  border-right: 2px solid #282c37;
   height: 100%;
   width: 110px;
 }
+.mainHeader > a {
+  text-decoration: none;
+  color: white;
+}
+.mainHeader > a:hover {
+  color: orange;
+}
 
 .mainLogo {
-  background-image: url("../../../../public/images/dworom.png");
-  height: 50px;
-  width: 100px;
-  margin: 5px;
+  display: flex;
+  align-items: center;
+}
+.mainLogo > h2 {
+  text-align: center;
+  margin-right: auto;
+  margin-left: auto;
+  font-weight: 700;
 }
 
 .mainHeaderBody {
@@ -48,5 +92,5 @@
 }
 
 .linkButton:hover {
-  background-color: #3D313F;
+  background-color: #282c37;
 }/*# sourceMappingURL=MainHeader.css.map */

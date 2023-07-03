@@ -7,16 +7,30 @@ $header-width: 110px;
     position: fixed;
     flex-direction: column;
     margin: 0;
-    border-right: 2px solid $color-primary-2;
+    border-right: 2px solid $classic-base-color;
     height: 100%;
     width: $header-width;
-  }
+    & > a {
+        text-decoration: none;
+        color: white;
+
+        &:hover {
+            color: orange;
+        }
+    }
+}
   
 .mainLogo {
-  background-image: url('../../../../public/images/dworom.png');
-  height: 50px;
-  width: 100px;
-  margin: 5px;
+  display: flex;
+  align-items: center;
+
+  & > h2 {
+    text-align: center;
+    margin-right: auto;
+    margin-left: auto;
+    font-weight: 700;
+  }
+  
 }
 
 .mainHeaderBody {
@@ -52,5 +66,5 @@ $header-width: 110px;
 }
 
 .linkButton:hover {
-    background-color: $color-secondary-1-2;
+    background-color:  $classic-base-color;
 }
