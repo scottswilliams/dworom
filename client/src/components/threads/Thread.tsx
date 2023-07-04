@@ -1,8 +1,8 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import './Thread.css';
 import { Link } from 'react-router-dom';
 import { ReadOnlyTextEditor } from '../communities/textinput/TextEditor';
-import { VotingBox } from '../communities/voting/VotingBox';
+import { ThreadVotingBox, VoteState, VotingBox, vote_valueToVoteState } from '../communities/voting/VotingBox';
 
 export enum ThreadType 
 {
@@ -26,8 +26,9 @@ export interface IThreadDatabaseProps
     title: string,
     creation_date: Date,
     link?: string,
-    thumbnail?: string;
+    thumbnail?: string,
     body?: string,
+    vote_value?: number,
 }
 
 export const Thread = (props: IThreadProps | null) =>
@@ -71,7 +72,7 @@ export const Thread = (props: IThreadProps | null) =>
         <div className={"thread" + activeRefClassOrNull(ref, props.activeRef)}>
             <div className="threadLeftContainer">
                 <div className="threadTopContainer">
-                    <VotingBox />
+                    <VotingBox votingBox={new ThreadVotingBox(props.databaseProps.id, vote_valueToVoteState(props.databaseProps.vote_value))} />
                     <div className="threadThumbnail">
                         <img alt="" src={thumbnail} height="50px" width="50px"></img>
                     </div>
@@ -87,7 +88,7 @@ export const Thread = (props: IThreadProps | null) =>
                     <div className="threadComments">
                         {props.inComments ? 
                         <Link to={"/c/" + props.databaseProps.community_name + "/threads/" + props.databaseProps.id}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
                         </Link>
                         : null }
                     </div>

@@ -78,9 +78,8 @@ router.post('/createthread', async (req: any, res) => {
                 username = decoded.username;
             }
           });
-        console.log(bodyHTML);
+
         const sanitizedHTML = sanitizeHtml(bodyHTML);
-        console.log(sanitizedHTML);
 
         const communityResult= await pool.query("SELECT id FROM communities WHERE name = $1", [community]);
         const communityInternalId = communityResult.rows[0].id;
@@ -215,9 +214,8 @@ router.post('/submitComment', async (req, res) =>
             username = decoded.username;
         }
       });
-    console.log('\n',"Dirty: ", commentBodyHTML);
+
     const sanitizedHTML = sanitizeHtml(commentBodyHTML);
-    console.log('\n',"Sanitized: ", sanitizedHTML);
 
     const authorResult = await pool.query("SELECT id FROM users WHERE username = $1", [username]);
     const authorInternalId = authorResult.rows[0].id;
@@ -263,11 +261,14 @@ router.get('/thread/:id/comments/:parentId?', async (req, res) => {
                 comments.id,
                 users.username AS author_username,
                 comments.body,
-                comments.creation_date
+                comments.creation_date,
+                comment_votes.vote_value
             FROM
                 comments
             JOIN
                 users ON comments.author_id = users.id
+            LEFT JOIN
+                comment_votes ON comments.id = comment_votes.comment_id AND comments.author_id = comment_votes.user_id
             WHERE
                 comments.thread_id = $1
                 AND comments.parent_comment_id = $2
@@ -284,11 +285,14 @@ router.get('/thread/:id/comments/:parentId?', async (req, res) => {
                     comments.id,
                     users.username AS author_username,
                     comments.body,
-                    comments.creation_date
+                    comments.creation_date,
+                    comment_votes.vote_value
                 FROM
                     comments
                 JOIN
                     users ON comments.author_id = users.id
+                LEFT JOIN
+                    comment_votes ON comments.id = comment_votes.comment_id AND comments.author_id = comment_votes.user_id
                 WHERE
                     comments.thread_id = $1
                     AND comments.parent_comment_id IS NULL
@@ -304,6 +308,80 @@ router.get('/thread/:id/comments/:parentId?', async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).send('Error fetching threads');
+    }
+});
+
+router.post('/thread/:id/like', async (req, res) =>
+{
+    const thread_id = req.params.id;
+    const [ token ] = req.body;
+    let username;
+
+    try {  
+        jwt.verify(token, process.env.JWT_SECRET!, async (err: any, decoded: any) => {
+            if (err) {
+            return res.status(403).json({ message: 'Failed to authenticate token' });
+            }
+
+            else
+            {
+                username = decoded.username;
+
+                const {rows} = await pool.query(`
+                INSERT INTO 
+                    thread_votes
+                        (user_id,
+                        thread_id,
+                        vote_value)
+                VALUES(
+                    (SELECT id FROM users WHERE username = $1),
+                    $2,
+                    1);`,
+                [username, thread_id]); 
+
+                res.json(rows[0]);
+            }
+        });
+
+    } catch (error) {
+        res.status(500).send('Error liking thread');
+    }
+});
+
+router.post('/comment/:id/like', async (req, res) =>
+{
+    const comment_id = req.params.id;
+    const [ token ] = req.body;
+    let username;
+
+    try {  
+        jwt.verify(token, process.env.JWT_SECRET!, async (err: any, decoded: any) => {
+            if (err) {
+            return res.status(403).json({ message: 'Failed to authenticate token' });
+            }
+
+            else
+            {
+                username = decoded.username;
+
+                const {rows} = await pool.query(`
+                INSERT INTO 
+                    comment_votes
+                        (user_id,
+                        comment_id,
+                        vote_value)
+                VALUES(
+                    (SELECT id FROM users WHERE username = $1),
+                    $2,
+                    1);`,
+                [username, comment_id]); 
+
+                res.json(rows[0]);
+            }
+        });
+
+    } catch (error) {
+        res.status(500).send('Error liking thread');
     }
 });
 
