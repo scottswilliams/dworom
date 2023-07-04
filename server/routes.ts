@@ -127,13 +127,17 @@ router.get('/threads', async (req, res) => {
                 threads.creation_date,
                 threads.link,
                 threads.body,
-                threads.thumbnail
+                threads.thumbnail,
+                thread_votes.vote_value AS vote_value
             FROM
                 threads
             JOIN
                 communities ON threads.community_id = communities.id
             JOIN
                 users ON threads.author_id = users.id
+            LEFT JOIN
+                thread_votes ON threads.id = thread_votes.thread_id
+                                 AND threads.author_id = thread_votes.user_id
             OFFSET
                 $1
             LIMIT
@@ -172,11 +176,17 @@ router.get('/thread/:id', async (req, res) => {
                 threads.creation_date,
                 threads.link,
                 threads.body,
-                threads.thumbnail FROM threads
+                threads.thumbnail,
+                thread_votes.vote_value AS vote_value
+            FROM
+                threads
             JOIN
                 communities ON threads.community_id = communities.id
             JOIN
                 users ON threads.author_id = users.id
+            LEFT JOIN
+                thread_votes ON threads.id = thread_votes.thread_id
+                                AND threads.author_id = thread_votes.user_id
             WHERE threads.id = $1`, 
             [thread_id]);
         
@@ -245,63 +255,36 @@ router.post('/submitComment', async (req, res) =>
 
 router.get('/thread/:id/comments/:parentId?', async (req, res) => {
     const threadId = req.params.id
-    const parentId = req.params.parentId;
+    const parentId = req.params.parentId === undefined ? null : req.params.parentId;
 
     const page = parseInt(req.query.page as string) || 1; //  Number of pages we've already loaded
     const limit = 10; // Number of threads per page
     const offset = (page - 1) * limit; // Number of threads we've already loaded
 
     try {
-        let rows;
 
-        if (parentId) 
-        {
-            ({rows} = await pool.query(`
+            const {rows} = await pool.query(`
             SELECT 
                 comments.id,
                 users.username AS author_username,
                 comments.body,
                 comments.creation_date,
-                comment_votes.vote_value
+                comment_votes.vote_value AS vote_value
             FROM
                 comments
             JOIN
                 users ON comments.author_id = users.id
             LEFT JOIN
-                comment_votes ON comments.id = comment_votes.comment_id AND comments.author_id = comment_votes.user_id
+                comment_votes ON comments.id = comment_votes.comment_id
+                                 AND comments.author_id = comment_votes.user_id
             WHERE
                 comments.thread_id = $1
-                AND comments.parent_comment_id = $2
+                AND comments.parent_comment_id IS NOT DISTINCT FROM $2
             OFFSET
                 $3
             LIMIT
                 $4;`,
-            [threadId, parentId, offset, limit])); 
-        }
-
-        else {
-            ({rows} = await pool.query(`
-                SELECT 
-                    comments.id,
-                    users.username AS author_username,
-                    comments.body,
-                    comments.creation_date,
-                    comment_votes.vote_value
-                FROM
-                    comments
-                JOIN
-                    users ON comments.author_id = users.id
-                LEFT JOIN
-                    comment_votes ON comments.id = comment_votes.comment_id AND comments.author_id = comment_votes.user_id
-                WHERE
-                    comments.thread_id = $1
-                    AND comments.parent_comment_id IS NULL
-                OFFSET
-                    $2
-                LIMIT
-                    $3;`,
-                [threadId, offset, limit]));
-        }
+            [threadId, parentId, offset, limit]);
 
         res.json(rows);
 
@@ -311,10 +294,25 @@ router.get('/thread/:id/comments/:parentId?', async (req, res) => {
     }
 });
 
-router.post('/thread/:id/like', async (req, res) =>
+const vote_value = (direction: string) => {
+    if (direction === "like") {
+        return 1;
+    }
+    if (direction === "dislike") {
+        return -1;
+    }
+
+    else {
+        return 0;
+    }
+}
+
+router.post('/thread/:id/:direction', async (req, res) =>
 {
     const thread_id = req.params.id;
     const [ token ] = req.body;
+    const direction = req.params.direction;
+
     let username;
 
     try {  
@@ -336,8 +334,8 @@ router.post('/thread/:id/like', async (req, res) =>
                 VALUES(
                     (SELECT id FROM users WHERE username = $1),
                     $2,
-                    1);`,
-                [username, thread_id]); 
+                    $3);`,
+                [username, thread_id, vote_value(direction)]); 
 
                 res.json(rows[0]);
             }
@@ -348,11 +346,12 @@ router.post('/thread/:id/like', async (req, res) =>
     }
 });
 
-router.post('/comment/:id/like', async (req, res) =>
+router.post('/comment/:id/:direction', async (req, res) =>
 {
     const comment_id = req.params.id;
     const [ token ] = req.body;
     let username;
+    const direction = req.params.direction;
 
     try {  
         jwt.verify(token, process.env.JWT_SECRET!, async (err: any, decoded: any) => {
@@ -373,8 +372,8 @@ router.post('/comment/:id/like', async (req, res) =>
                 VALUES(
                     (SELECT id FROM users WHERE username = $1),
                     $2,
-                    1);`,
-                [username, comment_id]); 
+                    $3);`,
+                [username, comment_id, vote_value(direction)]); 
 
                 res.json(rows[0]);
             }
@@ -384,5 +383,6 @@ router.post('/comment/:id/like', async (req, res) =>
         res.status(500).send('Error liking thread');
     }
 });
+
 
 export default router;

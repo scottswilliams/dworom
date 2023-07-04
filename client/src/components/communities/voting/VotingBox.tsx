@@ -10,9 +10,9 @@ const thumbsDownFilledPath = require("../../../icons/thumbs-down-filled.svg").de
 
 export enum VoteState
 {
-    Liked,
-    Disliked,
-    None,
+    Liked = 1,
+    Disliked = -1,
+    None = 0,
 }
 
 interface IVotingBox 
@@ -23,29 +23,10 @@ interface IVotingBox
     voteState?: VoteState,
 }
 
-export function vote_valueToVoteState(vote_value?: number)
-{
-    if (vote_value === 1)
-    {
-        return VoteState.Liked;
-    }
-
-    if (vote_value === 2)
-    {
-        return VoteState.Disliked;
-    }
-
-    else
-    {
-        return VoteState.None;
-    }
-
-}
-
 export class CommentVotingBox implements IVotingBox
 {
     authContext = useContext(AuthContext);
-    voteState?: VoteState;
+    voteState: VoteState;
     id: string;
 
     constructor(id: string, voteState: VoteState){
@@ -68,8 +49,8 @@ export class CommentVotingBox implements IVotingBox
 export class ThreadVotingBox implements IVotingBox
 {
     authContext = useContext(AuthContext);
-    voteState?: VoteState;
     id: string;
+    voteState: VoteState;
 
     constructor(id: string, voteState: VoteState){
         this.id = id;

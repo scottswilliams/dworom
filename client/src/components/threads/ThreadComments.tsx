@@ -8,7 +8,7 @@ import CommentsRepeater from "../communities/comments/CommentsRepeater";
 
 export const ThreadComments = () =>
 {
-    let { community, id } = useParams();
+    let { id } = useParams();
       // Create state variables to store the data fetched and loading status
     const [data, setData] = useState<IThreadDatabaseProps | null>(null);
     const [isLoading, setIsLoading] = useState(true);

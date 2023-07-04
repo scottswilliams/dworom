@@ -3,7 +3,7 @@ import { ReadOnlyTextEditor } from "../textinput/TextEditor";
 import { useState } from 'react';
 import { CommentEditor } from '../textinput/CommentEditor';
 import CommentsRepeater from './CommentsRepeater';
-import { CommentVotingBox, VoteState, VotingBox, vote_valueToVoteState } from '../voting/VotingBox';
+import { CommentVotingBox, VotingBox } from '../voting/VotingBox';
 
 export interface ICommentProps 
 {
@@ -21,7 +21,7 @@ export interface ICommentDatabaseProps
     author_username: string,
     body: string,
     creation_date: Date,
-    vote_state: number,
+    vote_value?: number,
 }
 
 export const Comment = (props: ICommentProps) =>
@@ -32,7 +32,7 @@ export const Comment = (props: ICommentProps) =>
 
     return <div className={"commentContainer" + ((props.commentDepth % 2) === 0 ? " darkerContainer" : "")}>
         <div className="commentVoteInfoAndBodyContainer">
-            <div className={(props.isCollapsed ? "nodisp" : "")}><VotingBox votingBox={new CommentVotingBox(props.databaseProps.id, vote_valueToVoteState(props.databaseProps.vote_state))}/></div>
+            <div className={(props.isCollapsed ? "nodisp" : "")}><VotingBox votingBox={new CommentVotingBox(props.databaseProps.id, props.databaseProps.vote_value || 0)}/></div>
             
             <div className="commentInfoAndBodyContainer">
                 <div className="commentInfoBar">

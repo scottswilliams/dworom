@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import './Thread.css';
 import { Link } from 'react-router-dom';
 import { ReadOnlyTextEditor } from '../communities/textinput/TextEditor';
-import { ThreadVotingBox, VoteState, VotingBox, vote_valueToVoteState } from '../communities/voting/VotingBox';
+import { ThreadVotingBox, VotingBox, } from '../communities/voting/VotingBox';
 
 export enum ThreadType 
 {
@@ -72,7 +72,7 @@ export const Thread = (props: IThreadProps | null) =>
         <div className={"thread" + activeRefClassOrNull(ref, props.activeRef)}>
             <div className="threadLeftContainer">
                 <div className="threadTopContainer">
-                    <VotingBox votingBox={new ThreadVotingBox(props.databaseProps.id, vote_valueToVoteState(props.databaseProps.vote_value))} />
+                    <VotingBox votingBox={new ThreadVotingBox(props.databaseProps.id, props.databaseProps.vote_value || 0)} />
                     <div className="threadThumbnail">
                         <img alt="" src={thumbnail} height="50px" width="50px"></img>
                     </div>
