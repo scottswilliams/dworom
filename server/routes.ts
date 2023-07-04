@@ -307,7 +307,7 @@ const vote_value = (direction: string) => {
     }
 }
 
-router.post('/thread/:id/:direction', async (req, res) =>
+router.post('/thread/:id/vote/:direction', async (req, res) =>
 {
     const thread_id = req.params.id;
     const [ token ] = req.body;
@@ -324,18 +324,27 @@ router.post('/thread/:id/:direction', async (req, res) =>
             else
             {
                 username = decoded.username;
+                const voteValue = vote_value(direction);
 
                 const {rows} = await pool.query(`
-                INSERT INTO 
+                WITH ins AS (
+                    INSERT INTO thread_votes
+                        (user_id, thread_id, vote_value)
+                    VALUES (
+                        (SELECT id FROM users WHERE username = $1),
+                        $2,
+                        $3
+                    )
+                    ON CONFLICT (user_id, thread_id)
+                    DO UPDATE SET
+                     vote_value = EXCLUDED.vote_value
+                )
+                DELETE FROM
                     thread_votes
-                        (user_id,
-                        thread_id,
-                        vote_value)
-                VALUES(
-                    (SELECT id FROM users WHERE username = $1),
-                    $2,
-                    $3);`,
-                [username, thread_id, vote_value(direction)]); 
+                WHERE
+                    vote_value = 0 AND user_id = (SELECT id FROM users WHERE username = $1) AND thread_id = $2;`,
+                [username, thread_id, voteValue]);
+            
 
                 res.json(rows[0]);
             }
@@ -346,34 +355,39 @@ router.post('/thread/:id/:direction', async (req, res) =>
     }
 });
 
-router.post('/comment/:id/:direction', async (req, res) =>
+router.post('/comment/:id/vote/:direction', async (req, res) =>
 {
     const comment_id = req.params.id;
     const [ token ] = req.body;
     let username;
     const direction = req.params.direction;
 
-    try {  
+    try {
         jwt.verify(token, process.env.JWT_SECRET!, async (err: any, decoded: any) => {
             if (err) {
-            return res.status(403).json({ message: 'Failed to authenticate token' });
-            }
-
-            else
-            {
+                return res.status(403).json({ message: 'Failed to authenticate token' });
+            } else {
                 username = decoded.username;
+                const voteValue = vote_value(direction);
 
                 const {rows} = await pool.query(`
-                INSERT INTO 
-                    comment_votes
-                        (user_id,
-                        comment_id,
-                        vote_value)
-                VALUES(
-                    (SELECT id FROM users WHERE username = $1),
-                    $2,
-                    $3);`,
-                [username, comment_id, vote_value(direction)]); 
+                    WITH ins AS (
+                        INSERT INTO comment_votes
+                            (user_id, comment_id, vote_value)
+                        VALUES (
+                            (SELECT id FROM users WHERE username = $1),
+                            $2,
+                            $3
+                        )
+                        ON CONFLICT (user_id, comment_id)
+                        DO UPDATE SET 
+                            vote_value = EXCLUDED.vote_value
+                    )
+                    DELETE 
+                        FROM comment_votes
+                    WHERE 
+                        vote_value = 0 AND user_id = (SELECT id FROM users WHERE username = $1) AND comment_id = $2;`,
+                    [username, comment_id, voteValue]);
 
                 res.json(rows[0]);
             }
@@ -383,6 +397,7 @@ router.post('/comment/:id/:direction', async (req, res) =>
         res.status(500).send('Error liking thread');
     }
 });
+
 
 
 export default router;
