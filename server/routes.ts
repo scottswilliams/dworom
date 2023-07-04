@@ -128,6 +128,7 @@ router.get('/threads', async (req, res) => {
                 threads.link,
                 threads.body,
                 threads.thumbnail,
+                threads.score,
                 thread_votes.vote_value AS vote_value
             FROM
                 threads
@@ -177,6 +178,7 @@ router.get('/thread/:id', async (req, res) => {
                 threads.link,
                 threads.body,
                 threads.thumbnail,
+                threads.score,
                 thread_votes.vote_value AS vote_value
             FROM
                 threads
@@ -269,6 +271,7 @@ router.get('/thread/:id/comments/:parentId?', async (req, res) => {
                 users.username AS author_username,
                 comments.body,
                 comments.creation_date,
+                comments.score,
                 comment_votes.vote_value AS vote_value
             FROM
                 comments
@@ -327,7 +330,12 @@ router.post('/thread/:id/vote/:direction', async (req, res) =>
                 const voteValue = vote_value(direction);
 
                 const {rows} = await pool.query(`
-                WITH ins AS (
+                WITH old_votes AS (
+                    SELECT user_id, thread_id, vote_value
+                    FROM thread_votes
+                    WHERE user_id = (SELECT id FROM users WHERE username = $1) AND thread_id = $2
+                ),
+                ins AS (
                     INSERT INTO thread_votes
                         (user_id, thread_id, vote_value)
                     VALUES (
@@ -336,15 +344,30 @@ router.post('/thread/:id/vote/:direction', async (req, res) =>
                         $3
                     )
                     ON CONFLICT (user_id, thread_id)
-                    DO UPDATE SET
-                     vote_value = EXCLUDED.vote_value
+                    DO UPDATE SET vote_value = EXCLUDED.vote_value
+                    RETURNING *
+                ),
+                del AS (
+                    DELETE FROM thread_votes
+                    WHERE vote_value = 0 AND user_id = (SELECT id FROM users WHERE username = $1) AND thread_id = $2
+                    RETURNING *
+                ),
+                upd AS (
+                    UPDATE threads
+                    SET score = score + COALESCE(
+                        (SELECT
+                            CASE
+                                WHEN old_votes.vote_value IS NOT NULL THEN ins.vote_value - old_votes.vote_value
+                                ELSE ins.vote_value
+                            END
+                        FROM ins
+                        LEFT JOIN old_votes ON ins.user_id = old_votes.user_id AND ins.thread_id = old_votes.thread_id),
+                        0)
+                    WHERE id = $2
+                    RETURNING *
                 )
-                DELETE FROM
-                    thread_votes
-                WHERE
-                    vote_value = 0 AND user_id = (SELECT id FROM users WHERE username = $1) AND thread_id = $2;`,
+                SELECT * FROM upd;`,
                 [username, thread_id, voteValue]);
-            
 
                 res.json(rows[0]);
             }
@@ -371,33 +394,56 @@ router.post('/comment/:id/vote/:direction', async (req, res) =>
                 const voteValue = vote_value(direction);
 
                 const {rows} = await pool.query(`
-                    WITH ins AS (
-                        INSERT INTO comment_votes
-                            (user_id, comment_id, vote_value)
-                        VALUES (
-                            (SELECT id FROM users WHERE username = $1),
-                            $2,
-                            $3
-                        )
-                        ON CONFLICT (user_id, comment_id)
-                        DO UPDATE SET 
-                            vote_value = EXCLUDED.vote_value
+                WITH old_votes AS (
+                    SELECT user_id, comment_id, vote_value
+                    FROM comment_votes
+                    WHERE user_id = (SELECT id FROM users WHERE username = $1) AND comment_id = $2
+                ),
+                ins AS (
+                    INSERT INTO comment_votes
+                        (user_id, comment_id, vote_value)
+                    VALUES (
+                        (SELECT id FROM users WHERE username = $1),
+                        $2,
+                        $3
                     )
-                    DELETE 
-                        FROM comment_votes
-                    WHERE 
-                        vote_value = 0 AND user_id = (SELECT id FROM users WHERE username = $1) AND comment_id = $2;`,
-                    [username, comment_id, voteValue]);
-
+                    ON CONFLICT (user_id, comment_id)
+                    DO UPDATE SET vote_value = EXCLUDED.vote_value
+                    RETURNING *
+                ),
+                del AS (
+                    DELETE FROM comment_votes
+                    WHERE vote_value = 0 AND user_id = (SELECT id FROM users WHERE username = $1) AND comment_id = $2
+                    RETURNING *
+                ),
+                upd AS (
+                    UPDATE comments
+                    SET score = score + COALESCE(
+                        (SELECT
+                            SUM(
+                                CASE
+                                    WHEN old_votes.vote_value IS NOT NULL THEN ins.vote_value - old_votes.vote_value
+                                    ELSE ins.vote_value
+                                END
+                            )
+                        FROM ins
+                        LEFT JOIN old_votes ON ins.user_id = old_votes.user_id AND ins.comment_id = old_votes.comment_id),
+                        0)
+                    WHERE id = $2
+                    RETURNING *
+                )
+                SELECT * FROM upd;`,
+                [username, comment_id, voteValue]);
+            
+            
+    
                 res.json(rows[0]);
             }
         });
 
     } catch (error) {
-        res.status(500).send('Error liking thread');
+        res.status(500).send('Error voting on comment');
     }
 });
-
-
 
 export default router;

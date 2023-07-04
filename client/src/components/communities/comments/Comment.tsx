@@ -22,13 +22,14 @@ export interface ICommentDatabaseProps
     body: string,
     creation_date: Date,
     vote_value?: number,
+    score?: number,
 }
 
 export const Comment = (props: ICommentProps) =>
 {
     const [showReplyBox, setShowReplyBox] = useState<boolean>(false);
 
-    const creationDate = new Date(props.databaseProps?.creation_date!);
+    const creationDate = new Date(props.databaseProps.creation_date!);
 
     return <div className={"commentContainer" + ((props.commentDepth % 2) === 0 ? " darkerContainer" : "")}>
         <div className="commentVoteInfoAndBodyContainer">
@@ -36,7 +37,7 @@ export const Comment = (props: ICommentProps) =>
             
             <div className="commentInfoAndBodyContainer">
                 <div className="commentInfoBar">
-                    <span className="commentUsername">{props.databaseProps.author_username}</span> at <span className="commentDate">{creationDate.toLocaleTimeString()}</span>
+                {props.databaseProps.score || 0} net likes, by <span className="commentUsername">{props.databaseProps.author_username}</span> at <span className="commentDate">{creationDate.toLocaleTimeString()}</span>
                 </div>
                 <div className={"commentBody" + (props.isCollapsed ? " nodisp" : "")}><ReadOnlyTextEditor body={props.databaseProps.body}/></div>
             </div>

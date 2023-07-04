@@ -29,6 +29,7 @@ export interface IThreadDatabaseProps
     thumbnail?: string,
     body?: string,
     vote_value?: number,
+    score?: number,
 }
 
 export const Thread = (props: IThreadProps | null) =>
@@ -81,7 +82,7 @@ export const Thread = (props: IThreadProps | null) =>
                     </div>
                 </div>
                 <div className="threadInfo">
-                    <span className="threadInfo">by <span className="threadAuthor">{props.databaseProps.author_username}</span> in community <span className="threadCommunity">{props.databaseProps.community_name}</span> at <span className="threadTimestamp">{new Date(props.databaseProps.creation_date).toLocaleString()}</span> </span>
+                    <span className="threadInfo">{props.databaseProps.score || 0} net likes, by <span className="threadAuthor">{props.databaseProps.author_username}</span> in community <span className="threadCommunity">{props.databaseProps.community_name}</span> at <span className="threadTimestamp">{new Date(props.databaseProps.creation_date).toLocaleString()}</span> </span>
                 </div>
             </div>
             <div className="threadButtons">

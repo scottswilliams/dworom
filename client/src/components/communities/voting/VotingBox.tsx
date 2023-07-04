@@ -36,12 +36,24 @@ export class CommentVotingBox implements IVotingBox
 
     submitLike()
     {
-        axios.post(`http://localhost:5000/api/comment/${this.id}/like`, [this.authContext.token]);
+        if (this.voteState === VoteState.Liked) {
+            axios.post(`http://localhost:5000/api/comment/${this.id}/vote/removeVote`, [this.authContext.token]);
+        }
+
+        else {
+            axios.post(`http://localhost:5000/api/comment/${this.id}/vote/like`, [this.authContext.token]);
+        }
     }
 
-    submitDislike()
+    submitDislike() 
     {
-        axios.post(`http://localhost:5000/api/comment/${this.id}/dislike`, [this.authContext.token]);
+        if (this.voteState === VoteState.Disliked) {
+            axios.post(`http://localhost:5000/api/comment/${this.id}/vote/removeVote`, [this.authContext.token]);
+        }
+        
+        else {
+            axios.post(`http://localhost:5000/api/comment/${this.id}/vote/dislike`, [this.authContext.token]);
+        }
     }
 
 }
