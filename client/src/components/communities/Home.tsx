@@ -8,7 +8,7 @@ import {
   BrowserRouter as Router,
   Routes
 } from "react-router-dom";
-import { CreateThread } from "./createThread/CreateThread";
+import { CreateThread } from "../threads/createThread/CreateThread";
 import Sidebar from "./sidebar/Sidebar";
 import { ThreadComments } from "../threads/ThreadComments";
 

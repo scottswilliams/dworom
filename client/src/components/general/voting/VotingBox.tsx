@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import "./VotingBoxStyles.scss";
 import axios from "axios";
-import { AuthContext } from "../Home";
+import { AuthContext } from "../../communities/Home";
 
 const thumbsUpPath = require("../../../icons/thumbs-up.svg").default as string;
 const thumbsDownPath = require("../../../icons/thumbs-down.svg").default as string;

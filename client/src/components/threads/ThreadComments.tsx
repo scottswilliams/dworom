@@ -2,8 +2,8 @@ import { useParams } from "react-router-dom";
 import { IThreadDatabaseProps, Thread } from "./Thread";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { CommentEditor } from "../communities/textinput/CommentEditor";
-import CommentsRepeater from "../communities/comments/CommentsRepeater";
+import { CommentEditor } from "../general/textinput/CommentEditor";
+import CommentsRepeater from "../comments/CommentsRepeater";
 
 
 export const ThreadComments = () =>

@@ -1,8 +1,8 @@
 import React, { useRef } from 'react';
 import './Thread.css';
 import { Link } from 'react-router-dom';
-import { ReadOnlyTextEditor } from '../communities/textinput/TextEditor';
-import { ThreadVotingBox, VotingBox, } from '../communities/voting/VotingBox';
+import { ReadOnlyTextEditor } from '../general/textinput/TextEditor';
+import { ThreadVotingBox, VotingBox, } from '../general/voting/VotingBox';
 
 export enum ThreadType 
 {

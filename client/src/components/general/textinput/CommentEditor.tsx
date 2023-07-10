@@ -2,7 +2,7 @@ import { TextEditor } from "./TextEditor";
 import './EditorStyles.css';
 import { useContext, useState } from "react";
 import axios from "axios";
-import { AuthContext } from "../Home";
+import { AuthContext } from "../../communities/Home";
 
 interface ICommentProps
 {

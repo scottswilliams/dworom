@@ -1,9 +1,9 @@
 import './Comments.css';
-import { ReadOnlyTextEditor } from "../textinput/TextEditor";
+import { ReadOnlyTextEditor } from "../general/textinput/TextEditor";
 import { useState } from 'react';
-import { CommentEditor } from '../textinput/CommentEditor';
+import { CommentEditor } from '../general/textinput/CommentEditor';
 import CommentsRepeater from './CommentsRepeater';
-import { CommentVotingBox, VotingBox } from '../voting/VotingBox';
+import { CommentVotingBox, VotingBox } from '../general/voting/VotingBox';
 
 export interface ICommentProps 
 {

@@ -1,8 +1,8 @@
 import "./CreateThread.css";
 import { Dispatch, SetStateAction, useContext, useState } from "react";
 import axios from "axios";
-import { AuthContext } from "../Home";
-import { TextEditor } from "../textinput/TextEditor";
+import { AuthContext } from "../../communities/Home";
+import { TextEditor } from "../../general/textinput/TextEditor";
 
 export const CreateThread = () =>
 {

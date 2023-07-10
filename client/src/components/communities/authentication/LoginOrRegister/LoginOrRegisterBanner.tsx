@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 import './LoginOrRegisterStyles.css';
 import axios from 'axios';
-import { AuthContext } from '../Home';
+import { AuthContext } from '../../Home';
 
 const LoginOrRegisterBanner = () =>
 {
